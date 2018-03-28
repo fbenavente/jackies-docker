@@ -1,0 +1,42 @@
+{% load staticfiles %}
+<!-- Modal -->
+<div id="shopping_cart" class="modal fade" role="dialog" modal-reposition>
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><strong>Canasta de compra</strong></h4>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+            <tbody>
+                <tr ng-repeat="product in products" class="cart-item">
+                  <td width="70">
+                      <img ng-src="[[product.product.image]]" class="img-thumbnail" style="width:100%" />
+                  </td>
+                    <td>
+                    [[product.product.name]] <i ng-show="product.wedding" class="fa icon-wedding" aria-hidden="true"></i>
+                    </td>
+                    <td width="40">
+                        <span class="badge">
+                        <input class="product_qty" type="number" min="0.5" step="0.5" max="10" ng-model="product.qty"/>
+                        </span>
+                        <!--<span class="badge">[[product.qty]]</span>-->
+                    </td>
+                    <td width="30">
+                        <a class="btn btn-danger btn-small delete-btn pull-right"><i class="fa f-10 fa-trash" tooltip="eliminar"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+
+  </div>
+</div>

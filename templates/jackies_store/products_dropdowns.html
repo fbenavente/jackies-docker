@@ -1,0 +1,92 @@
+{% load staticfiles %}
+
+<div id="container-fluid" class="container-fluid" ng-controller="DropdownsController as vm">
+    <div class="row" id="row-category">
+        <!-- Dropdown Categories -->
+        <div id="dropdown-category" class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 dropdown-container dropdown-hidden" style="text-align: center" ng-style="verticalCenter.category">
+            <div class="dropdown" style="display: inline-block; margin: auto;">
+              <button class="btn btn-secondary btn-lg dropdown-toggle btn-question btn-question-big" type="button" id="dropdown-category-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+
+                  <div class="question-text" ng-cloak>
+                      <span class="fa-stack fa-lg question-number">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-inverse fa-stack-1x">[[categoryQuestionNumber]]</i>
+                        </span>
+                      [[selectedDropdownItem.category|capitalizeWord]]
+                  </div>
+                <i class="fa fa-caret-down"></i>
+              </button>
+
+              <ul id="dropdown-category-menu" class="dropdown-menu dropdown-menu-big scrollable-menu" aria-labelledby="dropdown-category-btn">
+                <li ng-repeat="category in categories|orderBy: 'order'"><a href="#" ng-click="selectDropdown('category', category['name'])">
+                    <!--<img class="image_thumbnail img-thumbnail" src="" />--> [[category['name']|capitalizeWord]]</a></li>
+              </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="row" id="row-flavor">
+        <!-- Dropdown flavors -->
+        <div id="dropdown-flavor" class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 dropdown-container dropdown-hidden" style="text-align: center" ng-style="verticalCenter.flavor">
+            <div class="dropdown" style="display: inline-block; margin: auto;">
+              <button class="btn btn-secondary btn-lg dropdown-toggle btn-question btn-question-big" ng-class="flavor_number_class" type="button" id="dropdown-flavor-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  <div class="question-text">
+                      <span class="fa-stack fa-lg question-number">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-inverse fa-stack-1x">[[flavorQuestionNumber]]</i>
+                        </span>
+                      [[selectedDropdownItem.flavor|capitalizeWord]]
+                  </div>
+                <i class="fa fa-caret-down"></i>
+              </button>
+
+              <ul id="dropdown-flavor-menu" class="dropdown-menu dropdown-menu-big scrollable-menu" aria-labelledby="dropdown-flavor-btn">
+                <li ng-repeat="flavor in flavors_per_category[selectedDropdownItem.category]|orderBy:'order'"><a href="#" ng-click="selectDropdown('flavor', flavor['name'])">[[flavor['name']|capitalizeWord|limitTo:23]]</a></li>
+              </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="row-size">
+
+        <!-- Dropdown sizes -->
+        <div id="dropdown-size" class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 dropdown-container dropdown-hidden" style="text-align: center" ng-style="verticalCenter.size">
+            <div class="dropdown" style="display: inline-block; margin: auto;">
+              <button class="btn btn-secondary btn-lg dropdown-toggle btn-question btn-question-big" ng-class="size_number_class" type="button" id="dropdown-size-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  <div class="question-text">
+                      <span class="fa-stack fa-lg question-number">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-inverse fa-stack-1x">[[sizeQuestionNumber]]</i>
+                        </span>
+                      [[selectedDropdownItem.size|capitalizeWord]]
+                  </div>
+                <i class="fa fa-caret-down"></i>
+              </button>
+
+              <ul id="dropdown-size-menu" class="dropdown-menu dropdown-menu-big scrollable-menu" aria-labelledby="dropdown-size-btn">
+                <li ng-repeat="size in sizes_per_flavor_category[selectedDropdownItem.category][selectedDropdownItem.flavor]|orderBy:'order'"><a href="#" ng-click="selectDropdown('size', size['name'])">[[size['name']|capitalizeWord]]</a></li>
+              </ul>
+            </div>
+        </div>
+
+    </div>
+
+    {% include 'jackies_store/product_preview.html' %}
+
+    <div ng-controller="ShoppingCartController">
+        <!-- shopping cart button -->
+        <div id="shopping_cart_btn">
+            <a href="#" data-toggle="modal" data-target="#shopping_cart" ng-click="closeProduct()">
+                <span class="fa-stack fa-2x">
+                  <i style="color:#813911; text-shadow: 2px 2px 2px #2A120A;" class="fa fa-circle fa-stack-2x"></i>
+                  <i style="color:#F3E2A9" class="fa fa-shopping-basket fa-stack-1x"></i>
+                </span>
+                <span ng-show="cart_count" id="cart_count" ng-cloak>[[cart_count]]</span>
+            </a>
+        </div>
+
+        {% include 'jackies_store/shopping_cart_modal.html' %}
+    </div>
+
+</div>
+
+

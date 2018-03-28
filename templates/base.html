@@ -1,0 +1,60 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html {% block app %}ng-app="jackies"{% endblock %}>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title></title>
+
+    {# Bootstrap #}
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries/bootstrap-3.3.7/css/bootstrap.css' %}">
+    <!-- Optional theme -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries/bootstrap-3.3.7/css/bootstrap-theme.css' %}">
+
+    <!-- ngDialog -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries/ngDialog/ngDialog.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'libraries/ngDialog/ngDialog-theme-default.css' %}">
+
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="{% static 'libraries/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+
+    <!-- Custom Font Icons -->
+    <link rel="stylesheet" href="{% static 'libraries/custom-icons/css/custom_icons.css' %}">
+
+
+    {% block style_imports %}
+    {% endblock %}
+
+    {% block base_html5 %}
+    <!-- This is required if you apply angular $locationProvider.html5Mod -->
+    <base href="/" />
+    {% endblock %}
+
+</head>
+<body>
+    {% block body %}
+    {% endblock %}
+
+    {# jQuery #}
+    <script type="text/javascript" src="{% static 'libraries/jQuery/jquery-3.1.1.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libraries/jQuery/jquery-ui-1.12.1/jquery-ui.js' %}"></script>
+
+    {# Angular.js #}
+    <script type="text/javascript" src="{% static 'libraries/angular/angular.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libraries/angular/angular-route.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libraries/angular/angular-cookies.js' %}"></script>
+
+    <!-- Latest compiled and minified Bootstrap JavaScript -->
+    <script type="text/javascript" src="{% static 'libraries/bootstrap-3.3.7/js/bootstrap.js' %}"></script>
+
+    <!-- ngDialog for Angular -->
+    <script type="text/javascript" src="{% static 'libraries/ngDialog/ngDialog.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'js/jackies.js' %}"></script>
+    {% block body_scripts %}
+    {% endblock %}
+
+</body>
+
+</html>

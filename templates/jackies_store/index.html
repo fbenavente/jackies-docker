@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block style_imports %}
+
+    {% include 'jackies_store/stylesheets.html' %}
+
+{%  endblock %}
+
+{% block body %}
+    <div id="wrapper">
+        {% include 'navbar.html' %}
+
+        {% include 'jackies_store/products_dropdowns.html' %}
+    </div>
+    <div id="loading"></div>
+    <!--<div class="row">
+      <div class="col-xs-12 ng-view"></div>
+    </div>-->
+
+{%  endblock %}
+
+{% block body_scripts %}
+
+  {% include 'jackies_store/javascripts.html' %}
+
+{%  endblock %}
