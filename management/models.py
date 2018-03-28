@@ -1,7 +1,5 @@
-from django.core.validators import RegexValidator
 from django.db import models
-from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin, Permission
-from django.contrib import auth
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from django.conf import settings
 from jackies.settings import MEDIA_URL
 from django.utils import timezone
@@ -28,6 +26,7 @@ class Category(models.Model):
         app_label = 'management'
         db_table = 'category'
 
+
 class Flavor(models.Model):
     category = models.ForeignKey(Category)
     name = models.CharField(max_length=200, blank=False, null=False)
@@ -48,6 +47,7 @@ class Flavor(models.Model):
         unique_together = (("category", "name"),)
         app_label = 'management'
         db_table = 'flavor'
+
 
 class Size(models.Model):
     category = models.ForeignKey(Category)
@@ -70,11 +70,12 @@ class Size(models.Model):
         app_label = 'management'
         db_table = 'size'
 
+
 class Product(models.Model):
 
     category = models.ForeignKey(Category)
-    flavor = models.ForeignKey(Flavor,null=True, blank=True)
-    size = models.ForeignKey(Size,null=True, blank=True)
+    flavor = models.ForeignKey(Flavor, null=True, blank=True)
+    size = models.ForeignKey(Size, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     price = models.IntegerField()
     image = models.ImageField(upload_to="uploads/products/", blank=True, null=True)
@@ -112,12 +113,13 @@ class Product(models.Model):
         else:
             return smart_str("único")
 
-    #ToDo dont allow to create product with empty flavor if its category already has flavor(s)
+    # ToDo dont allow to create product with empty flavor if its category already has flavor(s)
 
     class Meta:
-        unique_together = (("category", "flavor","size"),)
+        unique_together = (("category", "flavor", "size"),)
         app_label = 'management'
         db_table = 'product'
+
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, confirm_password=None, last_name=None, first_name=None):
@@ -230,7 +232,7 @@ class ProductInOrder(models.Model):
     discount = models.IntegerField(default=0)
 
     class Meta:
-        unique_together = (("order", "product","wedding"),)
+        unique_together = (("order", "product", "wedding"),)
         app_label = 'management'
         db_table = 'product_in_order'
 
@@ -258,6 +260,7 @@ class Campaign(models.Model):
     class Meta:
         app_label = 'management'
         db_table = 'campaign'
+
 
 class Background(models.Model):
     name = models.CharField(max_length=150, null=True, blank=True)
