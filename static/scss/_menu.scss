@@ -1,0 +1,160 @@
+.menu {
+	h3, .h3 {
+		border-bottom: 3px solid $main-theme-color;
+		color: $main-dark-color;
+		margin-bottom: 0;
+		padding-bottom: $padding-base;
+	}
+	&-list {
+		display: block;
+		float: left;
+		margin-bottom: $margin-medium;
+		width: 100%;
+
+		&-item {
+			float: left;
+			width: 100%;
+			padding: $padding-base 0;
+			border-bottom: 1px solid rgba($main-theme-color, 0.4);
+
+			&-order {
+				font-size: 12px;
+				position: relative;
+				color: $main-gray;
+
+				&:after {
+					content: '';
+					position: absolute;
+					bottom: -7px;
+					height: 3px;
+					width: 12px;
+					left: 0;
+					background: $main-theme-color;
+				}
+			}
+			&-name {
+				width: 70%;
+				float: left;
+			}
+			&-title {
+				font-weight: 700;
+				width: 100%;
+				float: left;
+				color: $main-dark-color;
+				font-family: $main-font;
+				margin-top: $margin-base / 2;
+				margin-bottom: $margin-base;
+			}
+			&-price {
+				float: right;
+				margin-left: $margin-base;
+				text-align: right;
+				position: relative;
+
+				span {
+					font-size: 80%;
+					color: $main-gray;
+					font-weight: 400;
+					display: block;
+				}
+				&-row {
+					float: right;
+					width: 30%;
+				}
+			}
+			&-ingridients, &-icons {
+				color: $main-gray;
+				display: block;
+				width: 100%;
+				float: left;
+			}
+			&-icons {
+				display: block;
+				width: 100%;
+				float: left;
+				font-size: 11px;
+				margin-top: $margin-base / 3;
+
+				.icon {
+					width: 8px;
+					height: 8px;
+					margin-right: $margin-base /3;
+					border-radius: 10px;
+					display: inline-block;
+				}
+				.green {
+					margin-right: $margin-medium/ 3;
+
+					.icon {
+						background: #33AA46;
+					}
+				}
+				.red {
+					margin-right: $margin-medium/ 3;
+
+					.icon {
+						background: #AA3333;
+					}
+				}
+				.brown {
+					margin-right: $margin-medium/ 3;
+
+					.icon {
+						background: $main-theme-color;
+					}
+				}
+			}
+		}
+	}
+	&-labels {
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-justify-content: space-around;
+		-ms-flex-pack: distribute;
+		justify-content: space-around;
+		padding: 30px 0;
+		width: 100%;
+		border-top: 1px solid $main-light-gray;
+
+		@include smartphone {
+			display: block;
+		}
+		&-item {
+			@include smartphone {
+				display: block;
+				padding: $padding-base;
+				text-align: center;
+				width: 100%;
+				float: left;
+			}
+		}
+		.icon {
+			display: block;
+			font-size: 40px;
+			margin-bottom: 10px;
+			text-align: center;
+		}
+	}
+}
+.menu-modal {
+	&-price-row {
+		display: block;
+		text-align: center;
+		width: 100%;
+	}
+	&-item-price {
+		display: inline-block;
+		float: none;
+		font-size: 35px;
+		color: $main-dark-color;
+		padding: 30px;
+
+		> span {
+			display: block;
+			font-size: 18px;
+		}
+	}
+}

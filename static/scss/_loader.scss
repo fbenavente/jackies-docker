@@ -1,0 +1,44 @@
+// keyframes for bounce are defined in home.scss file
+
+.load {
+	background: $main-dark-color none repeat scroll 0 0;
+	bottom: 0;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 2236;
+
+	&-container {
+		left: 50%;
+		position: absolute;
+		top: 50%;
+		transform: translateX(-50%) translateY(-50%);
+		text-align: center;
+	}
+	&-bar {
+		display: inline-block;
+		height: 100px;
+		width: 10px;
+		border-radius: 10px;
+	}
+	&-text {
+		color: $main-light-color;
+		display: block;
+		font-weight: 700;
+		text-transform: uppercase;
+		margin-top: $margin-medium;
+	}
+	&-green {
+		background: green none repeat scroll 0 0;
+		animation: bounce 3s infinite;
+	}
+	&-white {
+		background: white none repeat scroll 0 0;
+		animation: bounce 2s infinite;
+	}
+	&-red {
+		background: red none repeat scroll 0 0;
+		animation: bounce 5s infinite;
+	}
+}

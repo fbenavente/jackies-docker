@@ -1,0 +1,245 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jackies - Tortas premium</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Include Bootstrap CSS -->
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <!-- Include SmartCart CSS -->
+    <link href="{% static 'vendors/smartcart/dist/css/smart_cart.min.css' %}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+    <link href="//code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="stylesheet">
+    <link href="//cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+</head>
+<body>
+       <nav class="navbar navbar-fixed-top shadow navbar-fixed-active" id="js-nav">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">
+                        <img src="{% static 'img/logo.png' %}" alt="logo">
+                        <img class="logo-inverse" src="{% static 'img/logo-inverse.png' %}" alt="logo">
+                    </a>
+                </div>
+
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li><a class="btn" href="/">Volver al Inicio</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+     <section class="about" id="ingredientes">
+     <div class="container">
+        <div class="row">
+            <div class="about-row section">
+            <div class="col-md-9">
+                <h4></h4>
+                <br>
+                <br>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><small>*Para asegurar la calidad y frescura de nuestros productos, todas nuestras tortas son hechas exclusivamente a pedido.</small></h4></div>
+                </div>
+                <div class="sc-product-item form-horizontal">
+                    <!-- PRODUCT IMAGE, identified by data-name="product_image"  -->
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="exampleInputEmail1">Seleccione sabor:</label>
+                        <div class="col-lg-9">
+                            <select id="flavorSelector" class="form-control">
+                            {% for flavor in flavors %}
+                                <option value="{{flavor.id}}">{{ flavor.name }}</option>
+                                
+                            {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="exampleInputEmail1">Seleccione tamaño:</label>
+                        <div class="col-lg-9">
+                            <select id="sizeSelector" class="form-control">
+                                <option value=16>Mini - 10 porciones</option>
+                                <option value=6>Pequeña - 13 porciones</option>
+                                <option value=8>Mediana - 25 porciones</option>
+                                <option value=13>Grande - 45 porciones</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail" class="col-lg-3 control-label">¿Cuantas unidades deseas?</label>
+                        <div class="col-lg-9">
+                        <input class="sc-cart-item-qty form-control" name="product_quantity" id="product_quantity" type="number" min=1 value=1></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail" class="col-lg-3 control-label">Imagen producto</label>
+                        <div class="col-lg-9">
+                            <img name="product_image" id="product_image" alt="140x140" style="width: auto; height: 140px;" class="img-thumbnail" data-holder-rendered="true" src="http://via.placeholder.com/140x140">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail" class="col-lg-3 control-label">Precio unitario</label>
+                        <div class="col-lg-9">
+                        <input id="product_price" name="product_price" value="" type="hidden" />
+                        <div id="unit_price">$29000</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-9">
+                        <button class="sc-add-to-cart btn btn-success">Añadir a pedido</button>
+                        </div>
+                    </div>
+
+
+
+
+
+                    
+                    <!-- PRODUCT NAME, identified by data-name="product_name" or can be an element with name="product_name"  -->
+                    <h4 style="display: none;" id="product_name" data-name="product_name"></h4>
+                    <!-- PRODUCT DESCRIPTION, identified by data-name="product_desc" or can be an element with name="product_desc"  -->
+                    <p style="display: none" id="product_desc" data-name="product_desc"></p>
+
+                    <!-- PRODUCT PRICE, identified by name="product_price" or can be an element with data-name="product_price"  -->
+                    <!-- PRODUCT ID, identified by name="product_id" or can be an element with data-name="product_id"  -->
+                    <input id="product_id" name="product_id" value="" type="hidden" />
+
+                    <!-- ADD TO CART BUTTON, identified by class="sc-add-to-cart"  -->
+                </div>
+                
+            </div>
+            
+            <aside class="col-md-3">
+                
+                <!-- Cart submit form -->
+                <form action="/pos/web_checkout/" method="POST"> 
+                    {% csrf_token %}
+                    <!-- SmartCart element -->
+                    <div id="smartcart"></div>
+                </form>
+                
+            </aside>
+        </div>
+    </div>
+    </div>
+    </section>
+    
+    <!-- Include jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript" ></script>
+    <!-- Include SmartCart -->
+
+    <script src="{% static 'vendors/smartcart/dist/js/landing_jquery.smartCart.js' %}" type="text/javascript"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js" type="text/javascript"></script>
+
+    <!-- Initialize -->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#smartcart').smartCart();
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            var price_data = {{ price_data | safe }};
+            var default_flavor = {{ default_flavor | safe }};
+            var default_size = {{ default_size | safe }};
+            // setup default Price
+            var opt = document.getElementById('unit_price');
+            opt.innerHTML = '$' + price_data[default_flavor][default_size]['price'];
+            document.getElementById("product_price").value = price_data[default_flavor][default_size]['price']; 
+
+            document.getElementById("product_id").value = price_data[default_flavor][default_size]['id']; 
+            $('#product_image').attr('src', price_data[default_flavor][default_size]['image']);
+
+
+            // mark selection
+            $("#sizeSelector").val(default_size);
+            $("#flavorSelector").val(default_flavor);
+
+            // add content
+            document.getElementById("product_name").innerHTML = 'Torta - ' + $("#flavorSelector").children("option").filter(":selected").text(); 
+            document.getElementById("product_desc").innerHTML = $("#sizeSelector").children("option").filter(":selected").text(); 
+
+
+            // listener flavor
+            $("#sizeSelector").change(function () {
+                var selectedSize = $(this).val();
+                var selectedFlavor = document.getElementById("flavorSelector").value;
+                var price = price_data[selectedFlavor][selectedSize]['price'];
+                if (price === 'NON-EXISTING'){
+                    var opt = document.getElementById('unit_price');
+                    opt.innerHTML = 'No existe este tamaño para el producto seleccionado, favor seleccione otro tamaño'; 
+                }
+                else{
+                    var opt = document.getElementById('unit_price');
+                    opt.innerHTML = '$' + price;
+                    document.getElementById("product_price").value = price;   
+                    document.getElementById("product_id").value = price_data[selectedFlavor][selectedSize]['id'];  
+                    document.getElementById("product_name").innerHTML = 'Torta - ' + $("#flavorSelector").children("option").filter(":selected").text(); 
+                    document.getElementById("product_desc").innerHTML = $("#sizeSelector").children("option").filter(":selected").text(); 
+
+                    $('#product_image').attr('src', price_data[selectedFlavor][selectedSize]['image']);             
+                }  
+            });
+            // listener size
+            $("#flavorSelector").change(function () {
+                var selectedFlavor = $(this).val();
+                var selectedSize = document.getElementById("sizeSelector").value;
+
+                var price = price_data[selectedFlavor][selectedSize]['price'];
+                if (price === 'NON-EXISTING'){
+                    var opt = document.getElementById('unit_price');
+                    opt.innerHTML = 'No existe este tamaño para el producto seleccionado, favor seleccione otro tamaño'; 
+                }
+                else{
+                    var opt = document.getElementById('unit_price');
+                    opt.innerHTML = '$' + price;
+                    document.getElementById("product_price").value = price; 
+                    document.getElementById("product_id").value = price_data[selectedFlavor][selectedSize]['id']; 
+                    document.getElementById("product_name").innerHTML = 'Torta - ' + $("#flavorSelector").children("option").filter(":selected").text(); 
+                    document.getElementById("product_desc").innerHTML = $("#sizeSelector").children("option").filter(":selected").text(); 
+                    $('#product_image').attr('src', price_data[selectedFlavor][selectedSize]['image']); 
+                }             
+
+            }); 
+        });
+    </script>
+  <script>
+    $(function() {
+ $.datepicker.regional['es'] = {
+ closeText: 'Cerrar',
+ prevText: '< Ant',
+ nextText: 'Sig >',
+ currentText: 'Hoy',
+ monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+ monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+ dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+ dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+ dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+ weekHeader: 'Sm',
+ dateFormat: 'dd/mm/yy',
+ firstDay: 1,
+ isRTL: false,
+ showMonthAfterYear: false,
+ yearSuffix: ''
+ };
+ $.datepicker.setDefaults($.datepicker.regional['es']);
+        $( "#datepicker" ).datepicker({
+                minDate: 2,
+                maxDate: 30,
+                defaultDate: +2,
+                required: true,
+                beforeShowDay: function(date) {
+                    var day = date.getDay();
+                    return [(day != 0), ''];
+                }
+        });
+    });
+  </script>
+</body>
+</html>

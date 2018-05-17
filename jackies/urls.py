@@ -22,8 +22,10 @@ admin.autodiscover()
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^pos/', include('pos.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^management/', include('management.urls')),
     url(r'^jackies_store/', include('jackies_store.urls')),
     url('^.*$', IndexView.as_view(), name='index'),
+    #url('^.*$', IndexView.as_view(), name='index'),
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

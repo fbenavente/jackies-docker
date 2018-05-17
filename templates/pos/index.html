@@ -1,0 +1,258 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jackies - POS</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    
+    <!-- Include SmartCart CSS -->
+    <link href="{% static 'vendors/smartcart/dist/css/smart_cart.min.css' %}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <br />
+    <section class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Productos
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <!-- BEGIN PRODUCTS -->
+                            {% for product_family in product_families %}
+                            <div class="col-md-4 col-sm-6">
+                                <div class="sc-product-item thumbnail" id="{{ product_family }}" name="{{ product_family }}">
+                                    <div class="caption">
+                                        <h4 data-name="product_name">{{product_family | title }}</h4>
+                                        <hr class="line">    
+                                        <div>
+                                          <div class="form-group">
+                                                <label>Tipo: </label>
+                                                <select id="{{product_family}}_flavors" name="product_flavor" class="form-control input-sm">
+                                                <option value="0">Seleccione tipo ---</option>
+                                                {% for family_flavors_name, flavors in data.flavors.items %}
+                                                    {% if family_flavors_name == product_family %}
+                                                        {% for flavor in flavors %}
+                                                            <option value="{{ flavor.normaliz_name }}">{{ flavor.name }}</option>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Tamaño: </label>
+                                                <select id="{{product_family}}_sizes" name="product_size" class="form-control input-sm">
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Tamaño: </label>
+                                                <select id="{{product_family}}_sizes_selector" name="product_family_size_selector" class="form-control input-sm">
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Unidades: </label>
+                                                <input class="sc-cart-item-qty form-control input-sm" name="product_quantity" min="1" value="1" type="number">
+                                            </div>
+                                            <strong id="{{product_family}}_price" class="price pull-left"></strong>
+                                            
+                                            <input id="{{product_family}}_price_input" name="product_price" value="" type="hidden" />
+                                            <input id="{{product_family}}_product_id" name="product_id" value="" type="hidden" />
+                                            <input id="{{product_family}}_product_desc" name="product_desc" value="" type="hidden" />
+
+                                            <button class="sc-add-to-cart btn btn-success btn-sm pull-right">Añadir</button>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <aside class="col-md-3">
+                
+                <!-- Cart submit form -->
+                <form action="/pos/checkout/" method="POST"> 
+                    {% csrf_token %}
+                    <!-- SmartCart element -->
+                    <div id="smartcart"></div>
+                </form>
+                
+            </aside>
+        </div>
+    </section>
+    
+    <!-- Include jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript" ></script>
+    <!-- Include SmartCart -->
+
+    <script src="{% static 'vendors/smartcart/dist/js/jquery.smartCart.js' %}" type="text/javascript"></script>
+    <!-- Initialize -->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            // Initialize Smart Cart        
+            $('#smartcart').smartCart();
+        });
+    </script>
+
+    <script type="text/javascript">
+        function removeOptions(selectbox)
+        {
+            if (selectbox === null){
+                return;
+            }
+            var i;
+            for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
+            {
+                selectbox.remove(i);
+            }
+        }
+
+        function setProductValuesFor(productFamily, flavor, size){
+            var flavorSelectId = productFamily + "_flavors";
+            var sizeSelectId = productFamily + "_sizes";
+
+            if (flavor == ''){
+                var flavorSelect = document.getElementById(flavorSelectId);
+                removeOptions(flavorSelect);
+                var opt = document.createElement('option');
+                opt.value = '0';
+                opt.innerHTML = 'no aplica';
+                flavorSelect.appendChild(opt);
+            }
+            if (size == ''){
+                var sizeSelect = document.getElementById(sizeSelectId);
+                removeOptions(sizeSelect);
+                var opt = document.createElement('option');
+                opt.value = '0';
+                opt.innerHTML = 'no aplica';
+                sizeSelect.appendChild(opt);
+            }
+
+            var data = {{ data_as_json | safe}};
+            var availableProducts = data.products;
+            var selectedProduct = availableProducts[productFamily][flavor][size];
+            // set prices
+            document.getElementById(productFamily + "_price").innerHTML = "$" + selectedProduct.price;
+            document.getElementById(productFamily + "_price_input").value = selectedProduct.price;
+            // set product id
+            document.getElementById(productFamily + "_product_id").value = selectedProduct.id;
+            // set product description
+            document.getElementById(productFamily + "_product_desc").value = flavor + " | " + size;
+
+        }
+
+        function createFlavorSelectListener(productFamily){
+            var flavorSelectId = productFamily + "_flavors";
+            var sizeSelectId = productFamily + "_sizes";
+
+            $("#" + flavorSelectId).change(function () {
+                var selectedFlavor = $(this).val();
+                var data = {{ data_as_json | safe}};
+                var availableSizes = data.sizes;
+                // get sizes for flavor
+                var sizesForFlavor = availableSizes[productFamily][selectedFlavor];
+                // clean all options first
+                removeOptions(document.getElementById(sizeSelectId));
+                var sizeSelect = document.getElementById(sizeSelectId);
+                var newLength = sizesForFlavor.length;
+
+                // if no options populate prices instantly
+                if (newLength == 1){
+                    setProductValuesFor(productFamily, selectedFlavor, '');
+                }
+                else{
+                    // populate with options
+                    var emptyOpt = document.createElement('option');
+                    emptyOpt.value = "0";
+                    emptyOpt.innerHTML = "seleccione tamaño ---";
+                    sizeSelect.appendChild(emptyOpt);
+
+                    for (var i = 0; i<newLength; i++){
+                        var opt = document.createElement('option');
+                        opt.value = sizesForFlavor[i].name;
+                        opt.innerHTML = sizesForFlavor[i].name;
+                        sizeSelect.appendChild(opt);
+                    }
+            }
+            });
+        }
+
+        function createSizeSelectListener(productFamily){
+            var flavorSelectId = productFamily + "_flavors";
+            var sizeSelectId = productFamily + "_sizes";
+
+            $("#" + sizeSelectId).change(function () {
+                var selectedSize = $(this).val();
+                var flavors = document.getElementById(flavorSelectId);
+                var selectedFlavor = flavors.options[flavors.selectedIndex].value;
+                setProductValuesFor(productFamily, selectedFlavor, selectedSize);
+
+            });  
+        }
+
+        function isSingleSize(productFamily){
+                var data = {{ data_as_json | safe}};
+                var flavors = data['sizes'][productFamily];
+                if (flavors[''] !== undefined){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+
+        }
+
+        function isSingleFlavor(productFamily){
+                var data = {{ data_as_json | safe}};
+                var flavors = data['flavors'][productFamily];
+                if (flavors.length > 1){
+                    return false;
+                }
+                else{
+                    return true;
+                }
+        }
+
+        $(document).ready(function(){
+            var product_families = {{ product_families | safe }};
+            // create listeners
+            for (var i = 0; i<product_families.length; i++){
+                // set inmediatly values
+                if (isSingleFlavor(product_families[i]) === true && isSingleSize(product_families[i]) === true){
+                    setProductValuesFor(product_families[i], '', '');
+                }
+
+                // conditional if not remove and put price
+                if (isSingleFlavor(product_families[i]) === true){
+                    console.log("singe flavor");
+                }else{
+                    // available flavors
+                    createFlavorSelectListener(product_families[i]); 
+                }
+
+                if (isSingleSize(product_families[i]) === true){
+                    console.log("single size");
+                }else{
+                    // conditional if not remove and put price
+                    createSizeSelectListener(product_families[i]);
+                }
+            }
+        });
+    </script>
+
+
+
+</body>
+</html>

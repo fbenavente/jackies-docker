@@ -1,3 +1,4 @@
 settings.py
 local.py
 *.pyc
+collected_statics/

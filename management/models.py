@@ -3,8 +3,15 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, Permis
 from django.conf import settings
 from jackies.settings import MEDIA_URL
 from django.utils import timezone
+from django.template.defaultfilters import slugify
 from django.utils.encoding import smart_str
-from _constants.choices import PRODUCT_STATUS_CODES, ORDER_SOURCE, ORDER_STATUS_CODES, DECORATION_OPTIONS
+from _constants.choices import (
+    PRODUCT_STATUS_CODES,
+    ORDER_SOURCE,
+    ORDER_STATUS_CODES,
+    DECORATION_OPTIONS,
+    ORDER_STATUS_CODES_DESC
+)
 
 
 class Category(models.Model):
@@ -15,6 +22,10 @@ class Category(models.Model):
 
     def __str__(self):
         return smart_str(self.name)
+
+    @property
+    def normalized_name(self):
+        return slugify(self.name).replace("-", "_")
 
     def get_image_url(self):
         if self.image and hasattr(self.image, 'url'):
@@ -37,6 +48,13 @@ class Flavor(models.Model):
     def __str__(self):
         return smart_str(self.category) + " " + smart_str(self.name)
 
+    @property
+    def normalized_name(self):
+        return slugify(self.name).replace("-", "_")
+
+    def get_normalized_name(self):
+        return slugify(self.name).replace("-", "_")
+
     def get_image_url(self):
         if self.image and hasattr(self.image, 'url'):
             return self.image.url
@@ -58,6 +76,10 @@ class Size(models.Model):
 
     def __str__(self):
         return smart_str(self.category) + " " + smart_str(self.name)
+
+    @property
+    def normalized_name(self):
+        return slugify(self.name).replace("-", "_")
 
     def get_image_url(self):
         if self.image and hasattr(self.image, 'url'):
@@ -82,9 +104,11 @@ class Product(models.Model):
     thumbnail = models.ImageField(upload_to="uploads/products/thumbnails/", blank=True, null=True)
     created_date = models.DateField(null=True, blank=True, default=timezone.now)
     status = models.IntegerField(null=True, blank=True, choices=PRODUCT_STATUS_CODES, default=1)
-    discount = models.IntegerField(default=0)
-    sold_units = models.IntegerField(default=0)
     new = models.BooleanField(default=False)
+    is_sugar_free = models.BooleanField(default=False)
+    is_whole_grain = models.BooleanField(default=False)
+    # internal use
+    cost = models.IntegerField(default=0)
 
     def __str__(self):
         return self.get_full_name() + " " + self.get_size_name()
@@ -116,22 +140,31 @@ class Product(models.Model):
     # ToDo dont allow to create product with empty flavor if its category already has flavor(s)
 
     class Meta:
-        unique_together = (("category", "flavor", "size"),)
+        unique_together = (("category", "flavor", "size", "is_sugar_free", "is_whole_grain"),)
         app_label = 'management'
         db_table = 'product'
 
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, password=None, confirm_password=None, last_name=None, first_name=None):
+    def create_user(
+            self,
+            email,
+            password=None,
+            confirm_password=None,
+            full_name=None,
+            phone_number=None
+        ):
         """
         Creates and saves a User with the given email, and password.
         """
         if not email:
             raise ValueError('Users must have an email address')
 
-        user = self.model(email=self.normalize_email(email),
-                          last_name=last_name,
-                          first_name=first_name)
+        user = self.model(
+            email=self.normalize_email(email),
+            full_name=full_name,
+            phone_number=phone_number
+        )
 
         user.set_password(password)
         user.save(using=self._db)
@@ -151,11 +184,11 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(unique=True, max_length=255)
-    first_name = models.CharField(max_length=30, null=True, blank=True)
-    last_name = models.CharField(max_length=30, null=True, blank=True)
+    full_name = models.CharField(max_length=100, null=True, blank=True)
     profile_image = models.ImageField(upload_to="uploads/users/", blank=True, null=True)
     birth_date = models.DateField(blank=True, null=True)
     phone_number = models.CharField(max_length=30, null=True, blank=True)
+    rut = models.CharField(max_length=30, null=True, blank=True)
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -166,17 +199,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     def get_full_name(self):
-        if self.first_name:
-            if self.last_name:
-                return smart_str(self.first_name + " " + self.last_name)
-            else:
-                return smart_str(self.first_name)
-        return self.email.split("@")[0]
+        return self.full_name
 
     def get_short_name(self):
-        if self.first_name:
-            return smart_str(self.first_name)
-        return self.email.split("@")[0]
+        return self.full_name.split(" ")[0]
 
     # On Python 3: def __str__(self):
     def __str__(self):
@@ -202,20 +228,66 @@ class Order(models.Model):
 
     product = models.ManyToManyField(Product, through='ProductInOrder')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True)
-    # Client info (if it is a "live" shopping)
-    name = models.CharField(max_length=150, null=True, blank=True)
-    phone_number = models.CharField(max_length=30, null=True, blank=True)
-    email = models.EmailField(null=True, blank=True, max_length=255)
     # order info
     order_time = models.DateTimeField(default=timezone.now)
     retire_time = models.DateTimeField()
     order_source = models.IntegerField(null=True, blank=True, choices=ORDER_SOURCE, default=1)
     status = models.IntegerField(null=True, blank=True, choices=ORDER_STATUS_CODES, default=1)
-    discount = models.IntegerField(default=0)
     total = models.IntegerField(null=True, blank=True)
+    # internal fields
+    admin_notes = models.TextField(null=True, blank=True)
+    comments = models.TextField(null=True, blank=True)
+    factura_required = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name = 'Pedido'
+        verbose_name_plural = 'Pedidos'
 
     def __str__(self):
         return str(self.id)
+
+    def _format_product_desc(self, product, product_quantity):
+        product_name = product.get_full_name()
+        product_size = None
+        if product.size:
+            product_size = product.size.name
+
+        if float(product_quantity) != 1.0:
+            if product_quantity == 0.5:
+                product_quantity = '1/2'
+            else:
+                product_quantity = int(product_quantity)
+            if product_size:
+                return '{} {} ({})'.format(product_quantity, product_name, product_size)
+            else:
+                return '{} {}'.format(product_quantity, product_name)
+        if product_size:
+            return '{} ({})'.format(product_name, product_size)
+        return product_name
+
+    @property
+    def description(self):
+        products = ProductInOrder.objects.filter(order=self)
+        if products.count() == 0:
+            return "No hay productos"
+
+        if products.count() == 1:
+            return self._format_product_desc(products[0].product, products[0].quantity)
+
+        if products.count() == 2:
+            return self._format_product_desc(products[0].product, products[0].quantity) + " y " + self._format_product_desc(products[1].product, products[1].quantity)
+        else:
+            return self._format_product_desc(products[0].product, products[0].quantity) + " y {} productos más".format(products.count() - 1)
+
+    @property
+    def status_description(self):
+        return ORDER_STATUS_CODES_DESC.get(self.status)
+
+    @property
+    def user_info(self):
+        if not self.user:
+            return "-"
+        return '{} - {}'.format(self.user.full_name, self.user.phone_number)
 
     class Meta:
         app_label = 'management'
@@ -229,7 +301,6 @@ class ProductInOrder(models.Model):
     wedding = models.BooleanField(default=False)
     decoration = models.IntegerField(null=True, blank=True, choices=DECORATION_OPTIONS, default=1)
     subtotal = models.IntegerField(null=True, blank=True)
-    discount = models.IntegerField(default=0)
 
     class Meta:
         unique_together = (("order", "product", "wedding"),)

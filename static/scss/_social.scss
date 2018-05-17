@@ -1,0 +1,33 @@
+.social {
+	color: $main-gray;
+	height: auto;
+	min-height: auto;
+	float: left;
+	width: 100%;
+	margin-bottom: $margin-large;
+
+	ul {
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-justify-content: space-around;
+		-ms-flex-pack: distribute;
+		justify-content: space-around;
+		width: 100%;
+		font-size: 40px;
+
+		@include smartphone {
+			font-size: 25px;
+		}
+	}
+	a {
+		color: $main-gray;
+		transition: $main-transition;
+
+		&:hover {
+			color: $main-theme-color;
+		}
+	}
+}

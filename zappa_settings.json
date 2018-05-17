@@ -1,0 +1,25 @@
+{
+    "prod": {
+        "django_settings": "jackies.settings.production", 
+        "aws_region": "sa-east-1",  // DB region -> sa-east-1
+        "profile_name": "default", 
+        "memory_size": 512,
+        "s3_bucket": "zappa-jackies-prod",
+        "exclude": ["*.zip", "*.pyc", "static", "collected_statics"],
+        "timeout_seconds": 300,
+        "xray_tracing": false,
+        "log_level": "WARNING",
+        "debug": false,
+        "domain": "tortasjackies.com",
+        "certificate_arn": "arn:aws:acm:us-east-1:737752328747:certificate/ccb6af16-c06e-4464-b409-a3fcca6581cd",
+        "keep_warm": false,
+        "environment_variables": {
+            "DATABASE_URL": "postgresql://jackies:66p4KUX38Vjnv7G9@jackies.cpf1cemdm0gg.sa-east-1.rds.amazonaws.com/jackies"
+        },
+        "aws_environment_variables": {
+            "DATABASE_URL": "postgresql://jackies:66p4KUX38Vjnv7G9@jackies.cpf1cemdm0gg.sa-east-1.rds.amazonaws.com/jackies"
+        },
+    }
+}
+
+

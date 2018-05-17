@@ -1,0 +1,75 @@
+p {
+    font-size: 16px;
+    font-family: $main-font-secondary;
+}
+.main-heading {
+    margin-bottom: $margin-medium;
+    font-family:$main-font-script;
+    font-size: 110px;
+    color: $main-theme-color;
+    text-align: center;
+    margin-bottom: 0;
+
+    @include smartphone {
+        font-size: 60px;
+        margin-top: 0;
+    }
+    @include medium-tablet {
+        font-size: 70px;
+    }
+    span {
+        display: block;
+        font-family: $main-font-secondary;
+        font-weight: 900;
+        text-transform: uppercase;
+        font-size: 35px;
+        letter-spacing: 0.4em;
+        color: $main-dark-color;
+
+        &.main-heading-decor {
+            display: inline-block;
+            margin: 0 auto;
+            text-align: center;
+        }
+        @include smartphone {
+            font-size: 28px;
+            letter-spacing: 0.1em;
+        }
+        @include medium-tablet {
+            font-size: 28px;
+            letter-spacing: 0.1em;
+        }
+    }
+    &-decor span {
+        color: $main-gray;
+        display: block;
+        float: left;
+        font-size: 30px;
+        height: 30px;
+        letter-spacing: normal;
+        line-height: 30px;
+        text-align: center;
+        width: 30px;
+    }
+    &.inverse span {
+        color: $main-light-color;
+    }
+}
+.main-sub-heading-decor {
+    display: inline-block;
+    margin: 0 auto;
+    text-align: center;
+
+    span {
+        color: $main-gray;
+        display: block;
+        float: left;
+        font-size: 20px;
+        height: 20px;
+        letter-spacing: normal;
+        line-height: 20px;
+        margin-bottom: $margin-base;
+        text-align: center;
+        width: 15px;
+    }
+}

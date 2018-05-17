@@ -1,0 +1,70 @@
+.testimonials {
+	@extend %section-padding;
+	background: $main-dark-color;
+	color: $main-light-color;
+
+	p {
+		color: $main-gray;
+	}
+	&-container {
+		max-width: 700px;
+		margin: 40px auto 0;
+		overflow: visible;
+		padding: $padding-base $padding-large;
+		border-top: 1px solid $main-theme-color;
+	}
+	&-slider {
+		width: 100%;
+		float: left;
+		overflow: hidden;
+
+		@include smartphone {
+			padding: 0 $padding-base;
+		}
+		img {
+			border-radius: 100px;
+			margin-top: -55px;
+			width: 80px;
+			height: 80px;
+			background: $main-light-color;
+			border: 1px solid $main-light-gray;
+		}
+		p {
+			font-size: 18px;
+			color: $main-gray;
+			line-height: 26px;
+		}
+		h3 {
+			span {
+				display: block;
+				color: $main-gray;
+				font-size: 50%;
+				text-transform: uppercase;
+				margin: $margin-base 0;
+			}
+		}
+	}
+	&-rating {
+		display: inline-block;
+
+		.icon {
+			display: inline-block;
+			font-size: 18px;
+			color: rgba($main-light-color, .5);
+			opacity: 1;
+
+			&.active {
+				color: $main-theme-color;
+				opacity: 1;
+			}
+		}
+	}
+	.swiper-slide {
+		transition: $main-transition;
+	}
+	.swiper-slide-next, .swiper-slide-prev {
+		@include medium-tablet {
+			visibility: hidden;
+		}
+	}
+}

@@ -1,0 +1,48 @@
+.locations {
+	background: $main-dark-color;
+
+	&-item {
+		margin-bottom: $margin-medium;
+
+		@include smartphone {
+			width: 100%;
+		}
+	}
+	&-title {
+		color: $main-light-color;
+
+		span {
+			color: $main-gray;
+			font-size: 70%;
+			display: block;
+		}
+	}
+	&-day {
+		color: $main-gray;
+	}
+	&-hours {
+		color: $main-light-color;
+	}
+	ul {
+		margin-top: $margin-medium;
+
+		li {
+			margin-bottom: $margin-base / 5;
+			text-align: left;
+		}
+	}
+	.icon {
+		color: $main-theme-color;
+		margin-right: 5px;
+	}
+	img {
+		width: 100%;
+		margin-top: $margin-base;
+
+		&.logo {
+			height: 20px;
+			width: auto;
+			margin-top: $margin-medium * 0.6;
+		}
+	}
+}

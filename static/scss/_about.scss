@@ -1,0 +1,98 @@
+.about {
+	h3 {
+		margin: $margin-medium * 1.5 0;
+	}
+	.btn {
+		margin: $margin-base auto;
+	}
+	.icon {
+		font-size: 40px;
+		color: $main-dark-color;
+	}
+	&-row {
+		width: 100%;
+		float: left;
+
+		&-inverse {
+			background: $main-dark-color url("../img/home6.jpg") no-repeat scroll center center / auto 100%;
+			color: $main-light-color;
+
+			p {
+				color: $main-gray;
+			}
+		}
+	}
+	&-photo {
+		img {
+			margin-bottom: $margin-medium;
+		}
+		&-row {
+			background: $main-dark-color;
+
+			img {
+				width: 100%;
+			}
+		}
+		@include smartphone {
+			width: 100%;
+			margin-top: $margin-medium;
+		}
+		@include medium-tablet {
+			margin-top: $margin-large;
+		}
+	}
+	&-chef {
+		background: $main-dark-color url("../img/chef.jpg") no-repeat scroll right center / 50% auto;
+		color: $main-light-color;
+		background-position: 42vw 0px;
+		background-size: auto 100%;
+
+		@include medium-tablet {
+			background: $main-dark-color url("../img/chef-overlay.jpg") no-repeat scroll right center / auto 100%;
+			color: $main-light-color;
+			background-position: right center;
+		}
+		@include smartphone {
+			background: $main-dark-color url("../img/chef-overlay.jpg") no-repeat scroll right center / auto 100%;
+			color: $main-light-color;
+			background-position: right center;
+		}
+		p {
+			color: $main-gray;
+		}
+	}
+	&-counter {
+		background: $main-dark-color;
+		text-align: center;
+
+		@include desktop {
+			padding: $padding-large 0;
+		}
+		.icon {
+			font-size: 40px;
+			color: $main-theme-color;
+		}
+		&-single {
+			border-right: 1px solid rgba($main-gray, 0.5);
+
+			@include medium-tablet {
+				border-right: none;
+				border-bottom: 1px solid rgba($main-gray, 0.5);
+				margin-bottom: $margin-base;
+			}
+			@include smartphone {
+				border-right: none;
+				border-bottom: 1px solid rgba($main-gray, 0.5);
+				margin-bottom: $margin-base;
+			}
+		}
+		.counter {
+			@include medium-tablet {
+				padding: $padding-medium 0;
+			}
+			@include smartphone {
+				padding: $padding-medium 0;
+			}
+		}
+	}
+}

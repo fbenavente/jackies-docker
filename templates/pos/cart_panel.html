@@ -1,0 +1,65 @@
+  {% load to_space %}
+                   <div class="panel-body">
+                        <div class="row">
+                            <!-- BEGIN PRODUCTS -->
+                            {% for product_family in product_families %}
+                            <div class="col-md-4 col-sm-4">
+                                <div class="sc-product-item thumbnail" id="{{ product_family }}" name="{{ product_family }}">
+                                    <div class="caption">
+                                        <h4 style="display: none;" data-name="product_name">{{product_family | title }}</h4>
+                                        <h4>{{ product_family | to_space | capfirst }}</h4>
+                                        <hr class="line">    
+                                        <div>
+                                          <div class="form-group">
+                                                <label>Tipo: </label>
+                                                <select id="{{product_family}}_flavors" name="product_flavor" class="form-control input-sm">
+                                                <option value="0">Seleccione tipo ---</option>
+                                                {% for family_flavors_name, flavors in data.flavors.items %}
+                                                    {% if family_flavors_name == product_family %}
+                                                        {% for flavor in flavors %}
+                                                            <option value="{{ flavor.normaliz_name }}">{{ flavor.name }}</option>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Tamaño: </label>
+                                                <select id="{{product_family}}_sizes" name="product_size" id="product_size" class="form-control input-sm">
+                                                </select>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Unidades: </label>
+                                                {% if product_family == 'torta_de_panqueque'  %}
+                                                    <select id="{{product_family}}_size_selector" name="product_quantity" id="product_size_selector" class="form-control input-sm sc-cart-item-qty">
+                                                       {% for qty in float_product_qty %}
+                                                            <option {% if qty == 1.0 %}selected{% endif %} value={{qty}}>{{ qty }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                {% else %}
+                                                    <select id="product_quantity" name="product_quantity" id="product_size_selector" class="form-control input-sm sc-cart-item-qty">
+                                                       {% for qty in integer_product_qty %}
+                                                            <option value={{qty}}>{{ qty }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Precio unitario: </label>
+                                            </div>
+                                                <strong id="{{product_family}}_price" class="price pull-left"></strong>  
+                                            
+                                            <input id="{{product_family}}_price_input" name="product_price" value="" type="hidden" />
+                                            <input id="{{product_family}}_product_id" name="product_id" value="" type="hidden" />
+                                            <input id="{{product_family}}_product_desc" name="product_desc" value="" type="hidden" />
+
+                                            <button class="sc-add-to-cart btn btn-success btn-sm pull-right">Añadir</button>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    </div>

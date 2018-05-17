@@ -1,0 +1,384 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="zxx">
+    <head>
+        <meta charset="utf-8">
+        <title>Jackies - Tortas premium</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="icon" type="image/png" href="img/favicon.png"/>
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700%7CAlex+Brush%7CPhilosopher:400,700,900" rel="stylesheet">
+
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/theme.css' %}">   
+    </head>
+
+    <body data-spy="scroll" data-target=".navbar" data-offset="50">
+        <nav class="navbar navbar-fixed-top shadow navbar-fixed-active" id="js-nav">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">
+                        <img src="{% static 'img/logo.png' %}" alt="logo">
+                        <img class="logo-inverse" src="{% static 'img/logo-inverse.png' %}" alt="logo">
+                    </a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#recomendaciones">Recomendaciones</a></li>
+                        <li><a href="#nosotros">Nosotros</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#contacto">contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+         <div class="load">
+             <div class="load-container">
+                 <span class="load-text">Cargando...</span>
+             </div>
+         </div>
+     
+        <section class="home" id="inicio">
+            <div class="">
+                <div class="home-slider text-center">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <h1 class="main-heading inverse">Jackie's<span>Tortas de panqueques y más</span>
+                                <span class="main-heading-decor"></span>
+                            </h1>
+                            <h2 class="home-slider-title-main">Hechas a mano</h2>
+                            <div class="home-slider-title-small">Somos conocidos por nuestras deliciosas tortas de panqueques elaboradas con los mejores ingredientes.</div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <a class="btn btn-default btn-lg text-center" href="/pos/web_order/">
+                    Hacer pedido
+                    </a>
+            
+                <a class="arrow bounce text-center" href="#recomendaciones">
+                    ver más
+                    <span>&#8595;</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="recomendation section" id="recomendaciones">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="main-heading ">Recomendaciones
+                        </h2>
+                    </div>
+
+                    <ul>
+                        <li class="col-md-4 col-sm-6 col-xs-6 wow fadeInDown" data-wow-delay="0.2s">
+                            <a href="/pos/web_order/?default_flavor=43&default_size=8" class="">
+                                <img src="{% static 'media/uploads/products/1002.jpg' %}" alt="placehoder">
+                                <span class="menu-list-item-title">
+                                    <span class="menu-list-item-name">Torta de Nuez</span>
+                                    <span class="menu-list-item-price-row">
+                                        <span class="menu-list-item-price">
+                                            <span><button class="btn btn-default btn-small">Pedir</button></span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+
+                        <li class="col-md-4 col-sm-6 col-xs-6 wow fadeInDown" data-wow-delay="0.2s">
+                            <a href="/pos/web_order/?default_flavor=8&default_size=13" class="">
+                                <img src="{% static 'media/uploads/products/9999.jpg' %}" alt="placehoder">
+                                <span class="menu-list-item-title">
+                                    <span class="menu-list-item-name">Torta de 4 Sabores</span>
+                                    <span class="menu-list-item-price-row">
+                                        <span class="menu-list-item-price">
+                                            <span><button class="btn btn-default btn-small">Pedir</button></span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+
+                        <li class="col-md-4 col-sm-6 col-xs-6 wow fadeInDown" data-wow-delay="0.4s">
+                            <a href="/pos/web_order/?default_flavor=29&default_size=8" class="">
+                                <img src="{% static 'media/uploads/products/1008.jpg' %}" alt="placehoder">
+                                <span class="menu-list-item-title">
+                                    <span class="menu-list-item-name">Torta de Frambuesa</span>
+                                    <span class="menu-list-item-price-row">
+                                        <span class="menu-list-item-price">
+                                            <span><button class="btn btn-default btn-small">Pedir</button></span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+
+                        <li class="col-md-4 col-sm-6 col-xs-6 wow fadeInDown" data-wow-delay="0.6s">
+                            <a href="/pos/web_order/?default_flavor=9&default_size=8" class="">
+                                <img src="{% static 'media/uploads/products/1073.jpg' %}" alt="placehoder">
+                                <span class="menu-list-item-title">
+                                    <span class="menu-list-item-name">Torta de Castaña-Chocolate</span>
+                                    <span class="menu-list-item-price-row">
+                                        <span class="menu-list-item-price">
+                                            <span><button class="btn btn-default btn-small">Pedir</button></span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+
+                        <li class="col-md-4 col-sm-6 col-xs-6 wow fadeInDown" data-wow-delay="0.4s">
+                            <a href="/pos/web_order/?default_flavor=26&default_size=8" class="">
+                                <img src="{% static 'media/uploads/products/1108.jpg' %}" alt="placehoder">
+                                <span class="menu-list-item-title">
+                                    <span class="menu-list-item-name">Torta de Naranja-Chocolate</span>
+                                    <span class="menu-list-item-price-row">
+                                        <span class="menu-list-item-price">
+                                            <span><button class="btn btn-default btn-small">Pedir</button></span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+
+                        <li class="col-md-4 col-sm-6 col-xs-6 wow fadeInDown" data-wow-delay="0.6s">
+                            <a href="/pos/web_order/?default_flavor=30&default_size=16" class="">
+                                <img src="{% static 'media/uploads/products/1078.jpg' %}" alt="placehoder">
+                                <span class="menu-list-item-title">
+                                    <span class="menu-list-item-name">Torta Limón-Frambuesa</span>
+                                    <span class="menu-list-item-price-row">
+                                        <span class="menu-list-item-price">
+                                            <span><button class="btn btn-default btn-small">Pedir</button></span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul> 
+                </div>
+            </div>
+        </section>
+
+        <section class="about" id="ingredientes">
+            <div class="about-chef section" id="nosotros">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-5 text-center">
+                            <h2 class="main-heading inverse">Únicas<span>Con mucho amor</span>
+                                <span class="main-heading-decor">
+                                    <span class=""><img class="wow fadeInUp js-rotate" data-wow-delay=".2s" src="{% static 'img/asterix.svg' %}" alt="decor" width="20" height="20"></span>
+
+                                    <span class="">
+                                    <img class="wow fadeInUp js-rotate" data-wow-delay=".4s" src="{% static 'img/asterix.svg' %}" alt="decor" width="20" height="20"></span>
+
+                                    <span class=""><img class="wow fadeInUp js-rotate" data-wow-delay=".6s" src="{% static 'img/asterix.svg' %}" alt="decor" width="20" height="20"></span>
+                                </span>
+                            </h2>
+                            <h3 class="wow fadeInDown">Todo hecho a mano</h3>
+                            <p class="wow fadeInUp">Cada torta que entregamos es única. Nos preocupamos de cada detalle en nuestras preparaciones, procurando siempre demostrar a través de la calidad de nuestros productos nuestro compromiso y pasión por lo que hacemos.</p>
+                            <a class="btn btn-default btn-lg" href="/pos/web_order/">Hacer pedido</a>
+                        </div>
+                    </div>
+                    <!-- / ABOUT MODAL -->
+                </div>
+            </div>
+        </section>
+
+        <section class="about" id="ingredientes">
+            <div class="container">
+                <div class="row">
+                    <div class="about-row section">
+                        <div class="col-md-6 text-center">
+                            <h2 class="main-heading ">Calidad<span>Los mejores ingredientes</span>
+                                <span class="main-heading-decor">
+                                    <span class=""><img class="wow fadeInUp js-rotate" data-wow-delay=".2s" src="{% static 'img/asterix.svg' %}" alt="decor" width="20" height="20"></span>
+
+                                    <span class="">
+                                    <img class="wow fadeInUp js-rotate" data-wow-delay=".4s" src="{% static 'img/asterix.svg' %}" alt="decor" width="20" height="20"></span>
+
+                                    <span class=""><img class="wow fadeInUp js-rotate" data-wow-delay=".6s" src="{% static 'img/asterix.svg' %}" alt="decor" width="20" height="20"></span>
+                                </span>
+                            </h2>
+                            <p> Utilizamos solo ingredientes naturales y frescos de primera calidad. Seleccionamos rigurosamente a nuestros proveedores, privilegiando lo local y manteniendo una estrecha relación con ellos, para asegurar la mejor calidad y frescura de nuestros ingredientes.  
+                            </p>
+                            <a class="btn btn-primary btn-lg" href="/pos/web_order/">Hacer pedido</a>
+                        </div>
+
+                        <div class="col-md-6 col-xs-12 about-photo">
+                            <img class="col-md-6 col-sm-6 col-xs-6 wow fadeInUp" data-wow-delay="0.2s" alt="about photo" src="{% static 'img/placeholder1.jpg' %}">
+                            <img class="col-md-6 col-sm-6 col-xs-6 wow fadeInDown" data-wow-delay="0.4s" alt="about photo" src="{% static 'img/placeholder2.jpg' %}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="services section" id="servicios">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="main-heading ">Servicios especiales <span>Tortas y productos especiales.</span>
+                            <span class="main-heading-decor">                          
+                                <span class="">
+
+                                    <img class="wow fadeInUp js-rotate" data-wow-delay=".2s" src="{% static 'img/asterix.svg' %}" alt="decor" width="20" height="20">
+                                </span>
+
+                                <span class="">
+                                    <img class="wow fadeInUp js-rotate" data-wow-delay=".4s" src="{% static 'img/asterix.svg' %}" alt="decor" width="20" height="20">
+                                </span>
+
+                                <span class="">
+                                    <img class="wow fadeInUp js-rotate" data-wow-delay=".6s" src="{% static 'img/asterix.svg' %}" alt="decor" width="20" height="20">
+                                </span>
+                            </span>
+                        </h2>
+                    </div>
+
+                    <ul>
+                        <li class="col-md-4 col-sm-6 col-xs-6 wow fadeInUp" data-wow-delay="0.2s">
+                            <a href="tel:452314181" class="">
+                                <span class="services-name h3">Matrimonios</span>
+                                <span class="services-description">Fabricamos tortas especiales para matrimonios, conservando nuestra esencia y sabor y agregando la decoración y estilo que necesites.</span>
+                                <span href="tel:452314181" class="">Consulta al teléfono 45 2314181</span>
+                            </a> 
+                        </li>
+                        <li class="col-md-4 col-sm-6 col-xs-6 wow fadeInUp" data-wow-delay="0.4s">
+                            <a href="tel:452314181" class="">
+                                <span class="services-name h3">Decoración especial</span>
+                                <span class="services-description">Si deseas tortas con algún tipo de decoración de tu preferencia, ya sea para cumpleaños, aniversarios, etc, llámanos.</span>
+                                <span href="tel:452314181" class="">Consulta al teléfono 45 2314181</span>
+                            </a> 
+                        </li>
+                        <li class="col-md-4 col-sm-6 col-xs-6 wow fadeInUp" data-wow-delay="0.6s">
+                            <a href="tel:452314181" class="" >
+                                <span class="services-name h3">Arma tu torta</span>
+                                <span class="services-description">¿Te gustaría combinar sabores? ¿Estás indeciso de cuál torta pedir? Puedes pedir 2 mitades de sabores diferentes o solicitar tortas con sabores a tu elección. </span>
+                                <span href="tel:452314181" class="">Consulta al teléfono 45 2314181</span>
+                            </a> 
+                        </li>
+                    </ul>
+
+                    <!-- SERVICES MODAL -->
+                    <div id="service-01" class="modal fade services-modal" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content shadow">
+                                <a class="close" data-dismiss="modal"><span class="ti-close"></span></a>
+                                <div class="modal-body">
+                                    <div class="modal-header">
+                                        <div class="col-md-12 text-center">
+                                            <h2>Matrimonios</h2>
+                                        </div>
+                                        <img src="{% static 'img/wedding.jpg' %}" alt="service photo" class="full-width">
+                                    </div>
+                                    <div class="modal-text-box">
+                                    <h4>We offer:</h4>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+
+                                        </p>
+                                        <h4>We offer also:</h4>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="service-02" class="modal fade services-modal" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content shadow">
+                                <a class="close" data-dismiss="modal"><span class="ti-close"></span></a>
+                                <div class="modal-body">
+                                    <div class="modal-header">
+                                        <div class="col-md-12 text-center">
+                                            <h2>Eventos especiales</h2>
+                                        </div>
+                                        <img src="{% static 'img/wedding.jpg' %}" alt="service photo" class="full-width">
+                                    </div>
+                                    <div class="modal-text-box">
+                                    <h4>We offer:</h4>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+
+                                        </p>
+                                        <h4>We offer also:</h4>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="service-03" class="modal fade services-modal" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content shadow">
+                                <a class="close" data-dismiss="modal"><span class="ti-close"></span></a>
+                                <div class="modal-body">
+                                    <div class="modal-header">
+                                        <div class="col-md-12 text-center">
+                                            <h2>Arma tu torta</h2>
+                                        </div>
+                                        <img src="{% static 'img/wedding.jpg' %}" alt="service photo" class="full-width">
+                                    </div>
+                                    <div class="modal-text-box">
+                                    <h4>We offer:</h4>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+
+                                        </p>
+                                        <h4>We offer also:</h4>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- / SERVICES MODAL -->
+                </div>
+            </div>
+        </section>
+        <section id="contacto" class="contact contact-with-map section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="main-heading">Contacto<span> Local: Reusch 424, Temuco.</span>
+                            <span class="main-heading-decor"> 
+                                <small>                         
+                                Horarios de atención: Lunes a Sábado de 9:30 a 20:00
+                                </small>
+                                <br>
+                                <small>
+                                Teléfono: <a href="tel:452314181"><strong>452314181</strong></a>
+                                </small>
+                            </span>
+                        </h2>
+                    </div>
+
+
+
+            <div class="google-maps">
+                <div id="map-canvas"></div>
+            </div>
+        </section>
+
+        <script src="{% static 'js/vendor/wow.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery-1.11.2.min.js' %}"></script>
+        <script src="{% static 'js/vendor/swiper.min.js' %}"></script>
+        <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery.countTo.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery.inview.js' %}"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_6m6Glf1-P7jvVdHZ00e3Ue_EoUNe39g"></script>
+        <script src="{% static 'js/main.js' %}"></script> 
+    </body>
+</html>

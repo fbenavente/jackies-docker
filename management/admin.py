@@ -16,24 +16,18 @@ class ProductInOrderInline(admin.TabularInline):
     extra = 1
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'name', 'order_time','retire_time','order_source','status','total',)
-    search_fields = ('id', 'name',)
+    list_display = ('id', 'order_time','retire_time','order_source','status','total',)
+    search_fields = ('id', )
     inlines = (ProductInOrderInline,)
     list_filter = ('order_time', 'retire_time', 'order_source', 'status',)
 
 class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'email', 'phone_number', 'image_html',)
-    search_fields = ('email','first_name', 'last_name',)
+    list_display = ('full_name', 'email', 'phone_number', )
+    search_fields = ('email','full_name',)
 
-    def image_html(self,obj):
-        return u'<img height="100" src="%s/" />' % (obj.get_image_url())
-    image_html.allow_tags = True
-    image_html.short_description = "Image"
-
-    def full_name(self,obj):
-        return obj.get_full_name()
-    full_name.short_description = "Full Name"
-
+    labels = {
+        'email': 'Correo',
+    }
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'order', 'image_html',)
@@ -83,11 +77,12 @@ class GlobalValuesAdmin(admin.ModelAdmin):
     search_fields = ('key',)
 
 admin.site.register(CustomUser, CustomUserAdmin)
-admin.site.register(Category, CategoryAdmin)
-admin.site.register(Flavor, FlavorAdmin)
-admin.site.register(Size, SizeAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Product, ProductAdmin)
-admin.site.register(ProductInOrder)
-admin.site.register(GlobalValues, GlobalValuesAdmin)
-admin.site.register(Background, BackgroundAdmin)
+#admin.site.register(Category, CategoryAdmin)
+#admin.site.register(Flavor, FlavorAdmin)
+#admin.site.register(Size, SizeAdmin)
+
+#admin.site.register(ProductInOrder)
+#admin.site.register(GlobalValues, GlobalValuesAdmin)
+#admin.site.register(Background, BackgroundAdmin)

@@ -1,0 +1,30 @@
+.footer {
+	background: $main-dark-color;
+	height: auto;
+	min-height: auto;
+	float: left;
+	width: 100%;
+
+	&-logo {
+		margin: $margin-medium 0;
+		height: 30px;
+		width: auto;
+	}
+	&-newsletter {
+		display: block;
+		margin: $margin-medium 0 $margin-large;
+
+		p {
+			margin-bottom: $margin-medium;
+		}
+		.btn {
+			border: medium none;
+			position: absolute;
+			right: -20px;
+			top: 0;
+		}
+		.input-group {
+			width: 100%;
+		}
+	}
+}

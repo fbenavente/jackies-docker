@@ -1,0 +1,31 @@
+.blog {
+	ul {
+		float: left;
+		display: block;
+
+		li {
+			img {
+				width: 100%;
+			}
+			margin-bottom: $margin-medium;
+			float: left;
+
+			@include smartphone {
+				width: 100%;
+			}
+		}
+	}
+	a {
+		span.menu-list-item-title {
+			color: $main-dark-color;
+		}
+	}
+	p {
+		color: $main-gray;
+	}
+	&-item-date {
+		color: $main-dark-color;
+		color: 700;
+		font-size: 80%;
+	}
+}

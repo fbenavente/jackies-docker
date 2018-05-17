@@ -1,0 +1,34 @@
+.services {
+
+	&-name {
+		margin: 0 0 $margin-medium 0;
+		display: block;
+	}
+
+	&-description {
+		color: $main-gray;
+		display: block;
+		height: 9em;
+		overflow: hidden;
+		line-height: 1.5em;
+		text-align: center;
+	}
+	li {
+		margin-bottom: $margin-medium;
+		@include smartphone {
+			width: 100%;
+		}
+			a {
+		border: 3px solid rgba($main-gray, 0.2);
+		display: block;
+		padding: 30px;
+		text-align: center;
+	}
+	
+	}
+
+	.btn {
+		margin-top: $margin-base;
+		display: inline-block;
+	}
+}

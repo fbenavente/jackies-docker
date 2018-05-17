@@ -1,0 +1,147 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zxx">
+    <head>
+        <meta charset="utf-8">
+        <title>Jackies - Tortas premium</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="icon" type="image/png" href="img/favicon.png"/>
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700%7CAlex+Brush%7CPhilosopher:400,700,900" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+    </head>
+    <body data-spy="scroll" data-target=".navbar" data-offset="50">
+        <nav class="navbar navbar-fixed-top shadow navbar-fixed-active" id="js-nav">
+            <ol class="breadcrumb">
+                <li><a href="#">Home</a> </li>
+                <li class="active">Pedir torta</li>
+            </ol>
+        </nav>
+        <section class="about" id="about">
+            <div class="container">
+                <div class="row">
+                    <div class="about-row section">
+                        <div class="col-md-12">
+                            <form class="form-horizontal">
+                                <fieldset>
+                                    <legend>Datos pedido</legend>
+                                    <p>Para asegurar calidad y frescura nuestras tortas son hechas exclusivamente a pedido.</p>
+                                    <div class="form-group">
+                                        <label for="inputEmail" class="col-lg-3 control-label">Seleccione sabor</label>
+                                        <div class="col-lg-9">
+                                            <select class="form-control">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputEmail" class="col-lg-3 control-label">Seleccione tamaño</label>
+                                        <div class="col-lg-9">
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="media">
+                                                            <div class="media-left">
+                                                                <a href="#"> <img alt="64x64" class="media-object" data-src="holder.js/64x64" style="width: 64px; height: 64px;" src="{% static 'images/medium.svg' %}"
+                                                                data-holder-rendered="true"> </a>
+                                                            </div>
+                                                            <div class="media-body">
+                                                            <h4 class="media-heading">Mini</h4> ... </div>
+                                                        </div></td>
+                                                        <td>                        <div class="media">
+                                                            <div class="media-left">
+                                                                <a href="#"> <img alt="64x64" class="media-object" data-src="holder.js/64x64" style="width: 64px; height: 64px;" src="{% static 'images/medium.svg' %}"
+                                                                data-holder-rendered="true"> </a>
+                                                            </div>
+                                                            <div class="media-body">
+                                                            <h4 class="media-heading">Pequeña</h4> ... </div>
+                                                        </div></td>
+                                                        <td>                        <div class="media">
+                                                            <div class="media-left">
+                                                                <a href="#"> <img alt="64x64" class="media-object" data-src="holder.js/64x64" style="width: 64px; height: 64px;" src="{% static 'images/medium.svg' %}"
+                                                                data-holder-rendered="true"> </a>
+                                                            </div>
+                                                            <div class="media-body">
+                                                            <h4 class="media-heading">Mediana</h4> ... </div>
+                                                        </div></td>
+                                                        <td>                        <div class="media">
+                                                            <div class="media-left">
+                                                                <a href="#"> <img alt="64x64" class="media-object" data-src="holder.js/64x64" style="width: 64px; height: 64px;" src="{% static 'images/medium.svg' %}"
+                                                                data-holder-rendered="true"> </a>
+                                                            </div>
+                                                            <div class="media-body">
+                                                            <h4 class="media-heading">Grande</h4> ... </div>
+                                                        </div></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputEmail" class="col-lg-3 control-label">¿Cuantas unidades deseas?</label>
+                                        <div class="col-lg-9">
+                                        <input class="form-control" type="number" value=1></input>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputEmail" class="col-lg-3 control-label">¿Para que día deseas tu pedido?</label>
+                                        <div class="col-lg-9">
+                                            <select class="form-control">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-10 col-lg-offset-2">
+                                                <button type="reset" class="btn btn-default">Cancel</button>
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+<fieldset>
+                                    <legend>Tus datos</legend>
+                                    <p>Te enviaremos un correo luego de aceptado el pedido.</p>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label" for="exampleInputEmail1">Email address</label>
+                                        <div class="col-lg-9">
+                                            <input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label" for="exampleInputEmail1">Tu nombre y apellido</label>
+                                        <div class="col-lg-9">
+                                            <input class="form-control" id="exampleInputEmail1" placeholder="Juan Perez" type="text">
+                                        </div>
+                                    </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <script src="{% static 'js/vendor/wow.js' %}"></script>
+            <script src="{% static 'js/vendor/jquery-1.11.2.min.js' %}"></script>
+            <script src="{% static 'js/vendor/swiper.min.js' %}"></script>
+            <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+            <script src="{% static 'js/vendor/jquery.countTo.js' %}"></script>
+            <script src="{% static 'js/vendor/jquery.inview.js' %}"></script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_6m6Glf1-P7jvVdHZ00e3Ue_EoUNe39g"></script>
+            <script src="{% static 'js/main.js' %}"></script>
+        </body>
+    </html>

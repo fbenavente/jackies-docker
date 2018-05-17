@@ -1,0 +1,43 @@
+.reservation {
+	h1 {
+		@include smartphone {
+			margin-top: $margin-medium;
+		}
+	}
+	h3 {
+		margin: $margin-medium * 1.5 0;
+	}
+	&-contact {
+		float: left;
+		width: 100%;
+		margin: $margin-base 0;
+
+		li {
+			padding: $padding-base /3 0;
+			color: $main-light-color;
+			position: relative;
+			font-size: 18px;
+			font-family: $main-font;
+
+			.icon {
+				color: $main-theme-color;
+				position: relative;
+				top: 1px;
+				margin-right: $margin-base /2;
+			}
+		}
+	}
+	&-row {
+		width: 100%;
+		float: left;
+
+		&-contact {
+			background: $main-dark-color url("../img/reservation.jpg") no-repeat scroll right center / auto 100%;
+			color: $main-light-color;
+
+			p {
+				color: $main-gray;
+			}
+		}
+	}
+}

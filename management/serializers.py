@@ -75,7 +75,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('id', 'category', 'flavor', 'size', 'description', 'price', 'image', 'thumbnail', 'created_date', 'status', 'discount', 'sold_units', 'new', 'name', 'wedding_surcharge')
+        fields = ('id', 'category', 'flavor', 'size', 'description', 'price', 'image', 'thumbnail', 'created_date', 'status', 'new', 'name', 'wedding_surcharge')
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -96,9 +96,13 @@ class FlavorSerializer(serializers.ModelSerializer):
     """ Model Serializer to parse Flavor's data """
 
     image = serializers.SerializerMethodField('show_image_url')
+    normaliz_name = serializers.SerializerMethodField('normalized_name')
 
     def show_image_url(self, flavor):
         return flavor.get_image_url()
+
+    def normalized_name(self, flavor):
+        return flavor.get_normalized_name()
 
     class Meta:
         model = Flavor
@@ -135,7 +139,7 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
 
         fields = ('id', 'user', 'name', 'phone_number', 'email', 'order_time', 'retire_time', 'order_source',
-                  'status', 'discount', 'total')
+                  'status', 'total')
         read_only_fields = ('id', 'order_time')
 
     def get_validation_exclusions(self, *args, **kwargs):

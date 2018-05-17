@@ -1,0 +1,39 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jackies - POS</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <h1>Ingreso</h1>
+
+    <div class="well">
+      <form role="form" method="POST" action="/pos/login/">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="login__email">Usuario</label>
+          <input type="text" class="form-control" id="email" name="email" />
+        </div>
+
+        <div class="form-group">
+          <label for="login__password">Contraseña</label>
+          <input type="password" class="form-control" id="password" name="password"  />
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>

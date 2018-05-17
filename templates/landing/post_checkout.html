@@ -1,0 +1,79 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="zxx">
+    <head>
+        <meta charset="utf-8">
+        <title>Jackies - Tortas premium</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="icon" type="image/png" href="img/favicon.png"/>
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700%7CAlex+Brush%7CPhilosopher:400,700,900" rel="stylesheet">
+
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/theme.css' %}">   
+    </head>
+
+    <body data-spy="scroll" data-target=".navbar" data-offset="50">
+        <nav class="navbar navbar-fixed-top shadow navbar-fixed-active" id="js-nav">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">
+                        <img src="{% static 'img/logo.png' %}" alt="logo">
+                        <img class="logo-inverse" src="{% static 'img/logo-inverse.png' %}" alt="logo">
+                    </a>
+                </div>
+
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li><a class="btn" href="/">Volver al Inicio</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <section class="about" id="about">
+            <div class="container">
+                <div class="row">
+                    <div class="about-row section">
+                        <div class="col-md-12 text-center">
+                        <br>
+                        <br>
+                        <br>
+                            <h2 class="main-heading ">Gracias<span>por tu pedido</span>
+                                <span class="main-heading-decor">
+                                    <span class=""><img class="wow fadeInUp js-rotate" data-wow-delay=".2s" src="{% static 'img/asterix.svg' %}" alt="decor" width="20" height="20"></span>
+
+                                    <span class="">
+                                    <img class="wow fadeInUp js-rotate" data-wow-delay=".4s" src="{% static 'img/asterix.svg' %}" alt="decor" width="20" height="20"></span>
+
+                                    <span class=""><img class="wow fadeInUp js-rotate" data-wow-delay=".6s" src="{% static 'img/asterix.svg' %}" alt="decor" width="20" height="20"></span>
+                                </span>
+                            </h2>
+                            <p> 
+                                <strong>Te enviaremos un correo</strong> con la confirmación de tu pedido junto con las instrucciones de retiro y pago.
+                            </p>
+                            <p> 
+                                El proceso de confirmación puede tomar <strong>un par de horas</strong>, favor tener paciencia. Si tienes más dudas llámanos al <strong><a href="tel:452314181">45 2314181.</a></strong>
+                            </p>
+
+                            <a class="btn btn-primary btn-lg" href="/">Volver al Inicio</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <script src="{% static 'js/vendor/wow.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery-1.11.2.min.js' %}"></script>
+        <script src="{% static 'js/vendor/swiper.min.js' %}"></script>
+        <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery.countTo.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery.inview.js' %}"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_6m6Glf1-P7jvVdHZ00e3Ue_EoUNe39g"></script>
+        <script src="{% static 'js/main.js' %}"></script> 
+    </body>
+</html>

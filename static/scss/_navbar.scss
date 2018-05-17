@@ -1,0 +1,255 @@
+.navbar {
+	border: none;
+	overflow: hidden;
+	z-index: 1000;
+
+	@include desktop {
+		background: rgba($main-light-color, 0);
+	}
+	&:after {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: -90px;
+		transition: $main-transition;
+		content: '';
+		width: 100%;
+		height: 81px;
+		z-index: -1;
+
+		@include desktop {
+			background: $main-light-color;
+		}
+	}
+	a {
+		padding: $padding-base;
+		color: $main-light-color;
+		font-family: $main-font;
+		font-weight: 400;
+	}
+	&-brand {
+		color: $main-light-color;
+		font-family: $main-font;
+		position: relative;
+		padding: 0 !important;
+		margin-left: $margin-base !important;
+		margin-top: $margin-medium / 3;
+
+		img {
+			opacity: 1;
+			transition: $main-transition;
+			height: 35px;
+			margin-top: 10px;
+
+			@include smartphone {
+				opacity: 1 !important;
+			}
+			@include tablet {
+				opacity: 1 !important;
+			}
+			&.logo-inverse {
+				transition: $main-transition;
+				position: absolute;
+				left: 0;
+				top: 0;
+
+				@include desktop {
+					opacity: 0;
+				}
+				@include smartphone {
+					opacity: 0 !important;
+				}
+				@include tablet {
+					opacity: 0 !important;
+				}
+			}
+		}
+		span {
+			color: $main-theme-color;
+		}
+	}
+	.navbar-collapse {
+		max-height: none !important;
+
+		@include smartphone {
+			margin-top: $margin-base;
+			margin-left: 0;
+			margin-right: 0;
+			padding: 0;
+		}
+		@include tablet {
+			margin-top: $margin-base;
+			margin-left: 0;
+			margin-right: 0;
+			padding: 0;
+		}
+	}
+	.navbar-toggle .icon-bar {
+		background: $main-theme-color;
+	}
+	&-nav {
+		float: right;
+		margin-top: 0;
+
+		@include tablet {
+			margin: 0;
+			background: $main-dark-color;
+			width: 100%;
+		}
+		@include smartphone {
+			margin: 0;
+			background: $main-dark-color;
+			width: 100%;
+		}
+		li {
+			float: none;
+			display: inline-block;
+
+			@include smartphone {
+				width: 100%;
+			}
+			@include tablet {
+				width: 100%;
+			}
+			&:first-child a {
+				@include tablet {
+					border-top: 1px solid rgba($main-light-gray, 0.3);
+				}
+				@include smartphone {
+					border-top: 1px solid rgba($main-light-gray, 0.3);
+				}
+			}
+			&:last-child a {
+				@include tablet {
+					border-bottom: none;
+				}
+				@include smartphone {
+					border-bottom: none;
+				}
+			}
+		}
+		li > a {
+			padding: $padding-medium $padding-base;
+			color: $main-light-color;
+			position: relative;
+			transition: $main-transition;
+			font-weight: 700;
+			font-size: 12px;
+			text-transform: uppercase;
+
+			@include tablet {
+				padding: $padding-base;
+				text-align: center;
+				border-bottom: 1px solid rgba($main-light-gray, 0.3);
+			}
+			@include smartphone {
+				padding: $padding-base;
+				text-align: center;
+				border-bottom: 1px solid rgba($main-light-gray, 0.3);
+			}
+			&:before {
+				transition: $main-transition;
+				content: '';
+				height: 4px;
+				background: $transparent;
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				opacity: 0;
+
+				@include tablet {
+					display: none;
+				}
+				@include smartphone {
+					display: none;
+				}
+			}
+			&:after {
+				transition: $main-transition;
+				content: '';
+				height: 4px;
+				background: $transparent;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				opacity: 0;
+
+				@include tablet {
+					display: none;
+				}
+				@include smartphone {
+					display: none;
+				}
+			}
+		}
+		& > .active > a, & > .active > a:hover, & > .active > a:focus {
+			opacity: 1;
+			background-color: none;
+
+			&:after {
+				transition: $main-transition;
+				background: $main-theme-color;
+				opacity: 1;
+			}
+		}
+	}
+	&-fixed-top {
+		// to prevent scroll issue on mobile devices, when top is fixed to top
+		@include smartphone {
+			position: absolute;
+			max-height: auto;
+		}
+		@include tablet {
+			position: absolute;
+			max-height: auto;
+		}
+	}
+	&.navbar-fixed-active {
+		//background: rgba($main-light-color, 1);
+
+		&:after {
+			transition: $main-transition;
+			top: 0px;
+		}
+		.navbar-brand {
+			position: relative;
+
+			img {
+				opacity: 0;
+				transition: $main-transition;
+
+				&.logo-inverse {
+					transition: $main-transition;
+					opacity: 1;
+				}
+			}
+		}
+		li > a {
+			position: relative;
+			transition: $main-transition;
+			font-weight: 700;
+			font-size: 12px;
+			text-transform: uppercase;
+
+			@include desktop {
+				color: $main-dark-color;
+				padding: $padding-medium $padding-base;
+			}
+		}
+	}
+}
+.nav > li > a:hover, .nav > li > a:focus {
+	background-color: $transparent;
+	text-decoration: none;
+}
+.nav > li > a:hover {
+	color: $main-gray;
+
+	&:before {
+		transition: $main-transition;
+		background: $main-gray;
+		opacity: 1;
+	}
+}

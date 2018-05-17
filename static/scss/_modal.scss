@@ -1,0 +1,50 @@
+.modal {
+    p {
+        margin-top: $margin-base;
+        margin-bottom: $margin-medium;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        color: $main-dark-color;
+        margin: $margin-medium 0;
+    }
+    &-content {
+        float: left;
+        margin: 30px 0;
+        width: 100%;
+    }
+    &-header {
+        padding: 0;
+
+        div {
+            padding: 0 $padding-medium;
+        }
+        img {
+            width: 50%;
+
+            &.full-width {
+                width: 100%;
+            }
+        }
+    }
+    &-text-box {
+        padding: $padding-medium;
+    }
+    &-open .modal {
+        background: rgba(0, 0, 0, 0.2) none repeat scroll 0 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+}
+button.close, .close {
+    background: none;
+    color: $main-theme-color;
+    cursor: pointer;
+    font-size: 20px !important;
+    font-weight: normal;
+    opacity: 1;
+    padding: $padding-base;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 10;
+}

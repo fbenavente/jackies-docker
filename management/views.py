@@ -65,10 +65,6 @@ class OrderList(APIView):
             logging.info(ERROR_RETIRE_TIME_NOT_PROVIDED)
             return Response({'message': ERROR_RETIRE_TIME_NOT_PROVIDED}, status=status.HTTP_400_BAD_REQUEST)
 
-        if 'discount' not in order_data:
-            logging.info(ERROR_DISCOUNT_NOT_PROVIDED)
-            return Response({'message': ERROR_DISCOUNT_NOT_PROVIDED}, status=status.HTTP_400_BAD_REQUEST)
-
         if 'total' not in order_data:
             logging.info(ERROR_TOTAL_NOT_PROVIDED)
             return Response({'message': ERROR_TOTAL_NOT_PROVIDED}, status=status.HTTP_400_BAD_REQUEST)
@@ -90,7 +86,6 @@ class OrderList(APIView):
         new_order.save()
 
         return Response(new_order, status=status.HTTP_201_CREATED)
-
 
 
 class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -137,6 +132,51 @@ class ProductList(generics.ListCreateAPIView):
                 sizes_per_flavor_category[product.category.name][flavor].append("")
 
             products_dict[product.category.name][flavor][size] = ProductSerializer(product).data
+        data_dict["flavors"] = flavors_per_category
+        data_dict["sizes"] = sizes_per_flavor_category
+        data_dict["products"] = products_dict
+        return Response(data_dict, status=status.HTTP_200_OK)
+
+
+class ProductList2(generics.ListCreateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+    def get(self, request, *args, **kwargs):
+        # This method returns a dict with three arrays: category, flavor and size for the dropdowns
+        data_dict = {"categories": [], "flavors": {}, "sizes": {}, "products":{}}
+        flavors_per_category = {}
+        sizes_per_flavor_category = {}
+        products_dict = OrderedDict()
+        #ToDo adding a top 10 filter (most sold)
+        products = Product.objects.filter(is_sugar_free=False, status=PRODUCT_STATUS_CODES[0][0]).exclude(size_id__in=[30, 31]).order_by("category", "flavor__name")
+        categories_ids = products.values_list("category", flat=True).distinct("category")
+        categories = Category.objects.filter(id__in=categories_ids)
+
+        data_dict["categories"] = CategorySerializer(categories, many=True).data
+        for product in products:
+            if not product.category.normalized_name in products_dict:
+                products_dict[product.category.normalized_name] = {}
+                flavors_per_category[product.category.normalized_name] = []
+                sizes_per_flavor_category[product.category.normalized_name] = {}
+
+            flavor, flavor_image = getFlavorName_v2(product)
+            size, size_image = getSizeName_v2(product)
+
+            if not flavor in products_dict[product.category.normalized_name]:
+                products_dict[product.category.normalized_name][flavor] = {}
+                if flavor != "":
+                    flavors_per_category[product.category.normalized_name].append(FlavorSerializer(product.flavor).data)
+                else:
+                    flavors_per_category[product.category.normalized_name].append("")
+                sizes_per_flavor_category[product.category.normalized_name][flavor] = []
+
+            if size != "":
+                sizes_per_flavor_category[product.category.normalized_name][flavor].append(SizeSerializer(product.size).data)
+            else:
+                sizes_per_flavor_category[product.category.normalized_name][flavor].append("")
+
+            products_dict[product.category.normalized_name][flavor][size] = ProductSerializer(product).data
         data_dict["flavors"] = flavors_per_category
         data_dict["sizes"] = sizes_per_flavor_category
         data_dict["products"] = products_dict
@@ -228,6 +268,20 @@ def getFlavorName(product):
 def getSizeName(product):
     if product.size:
         return product.size.name, product.size.get_image_url()
+    else:
+        return "", ""
+
+
+def getFlavorName_v2(product):
+    if product.flavor:
+        return product.flavor.normalized_name, product.flavor.get_image_url()
+    else:
+        return "", ""
+
+
+def getSizeName_v2(product):
+    if product.size:
+        return product.size.normalized_name, product.size.get_image_url()
     else:
         return "", ""
 

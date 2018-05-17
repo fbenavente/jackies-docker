@@ -1,0 +1,83 @@
+// sass --watch scss/theme.scss:css/theme.css
+// sass --watch scss/bootstrap.scss:css/bootstrap.css
+
+
+body {
+    background: $main-light-color;
+    overflow-x: hidden;
+}
+html, body {
+    font-family: $main-font-secondary;
+    font-weight: 300;
+    color: $main-gray;
+}
+ul, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+section {
+    width: 100%;
+    float: left;
+    overflow: hidden;
+    min-height: 600px;
+    position: relative;
+
+    &.section-min {
+        min-height: 100px;
+    }
+}
+%section-padding, .section {
+    padding: $padding-x-large 0;
+    width: 100%;
+    float: left;
+
+    @include smartphone {
+        padding: $padding-base * 4 0  $padding-large 0;
+    }
+    &-no-top {
+        margin-top: 0;
+        padding-top: 0;
+    }
+}
+iframe {
+    width: 100% !important;
+}
+a:hover, a:active, a:focus {
+    outline: none;
+}
+.btn {
+    box-shadow: none !important;
+
+    [class^="ti-"], [class*=" ti-"] {
+        display: inline-block;
+        margin-right: 5px;
+    }
+
+    &-margin {
+            margin-right: 5px !important;
+    margin-left: 5px !important;
+    }
+}
+.btn-group .btn {
+    box-shadow: none !important;
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+
+}
+
+.form-control {
+    border: none;
+    box-shadow: none;
+    background: none;
+    border-bottom: 2px solid $main-gray;
+
+    &:focus {
+        box-shadow: none;
+        outline: 0 none;
+    }
+}
+
+.shadow {
+  box-shadow: 0 0 40px -5px rgba(0, 0, 0, 0.1);
+}

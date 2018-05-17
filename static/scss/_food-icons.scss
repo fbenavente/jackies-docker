@@ -1,0 +1,356 @@
+// Icons by Agata Kuczminska
+// Licence for this template only
+// http://goodstuffnononsense.com/hand-drawn-icons/cooking-icons/
+
+$food-icon-font-path: "../fonts" !default;
+$food-icon-01:"\e900";
+$food-icon-02:"\e901";
+$food-icon-03:"\e902";
+$food-icon-04:"\e903";
+$food-icon-05:"\e904";
+$food-icon-06:"\e905";
+$food-icon-07:"\e906";
+$food-icon-08:"\e907";
+$food-icon-09:"\e908";
+$food-icon-10:"\e909";
+$food-icon-11:"\e90a";
+$food-icon-12:"\e90b";
+$food-icon-13:"\e90c";
+$food-icon-14:"\e90d";
+$food-icon-15:"\e90e";
+$food-icon-16:"\e90f";
+$food-icon-17:"\e910";
+$food-icon-18:"\e911";
+$food-icon-19:"\e912";
+$food-icon-20:"\e913";
+$food-icon-21:"\e914";
+$food-icon-22:"\e915";
+$food-icon-23:"\e916";
+$food-icon-24:"\e917";
+$food-icon-25:"\e918";
+$food-icon-26:"\e919";
+$food-icon-27:"\e91a";
+$food-icon-28:"\e91b";
+$food-icon-29:"\e91c";
+$food-icon-30:"\e91d";
+$food-icon-31:"\e91e";
+$food-icon-32:"\e91f";
+$food-icon-33:"\e920";
+$food-icon-34:"\e921";
+$food-icon-35:"\e922";
+$food-icon-36:"\e923";
+$food-icon-37:"\e924";
+$food-icon-38:"\e925";
+$food-icon-39:"\e926";
+$food-icon-40:"\e927";
+$food-icon-41:"\e928";
+$food-icon-42:"\e929";
+$food-icon-43:"\e92a";
+$food-icon-44:"\e92b";
+$food-icon-45:"\e92c";
+$food-icon-46:"\e92d";
+$food-icon-47:"\e92e";
+$food-icon-48:"\e92f";
+$food-icon-49:"\e930";
+$food-icon-50:"\e931";
+$food-icon-51:"\e932";
+$food-icon-52:"\e933";
+$food-icon-53:"\e934";
+$food-icon-54:"\e935";
+$food-icon-55:"\e936";
+
+@font-face {
+  font-family: 'food-icon-by-agata-kuczminska';
+  src: url('#{$food-icon-font-path}/food-icon-by-agata-kuczminska.eot?zc98uj');
+  src: url('#{$food-icon-font-path}/food-icon-by-agata-kuczminska.eot?zc98uj#iefix') format('embedded-opentype'), url('#{$food-icon-font-path}/food-icon-by-agata-kuczminska.ttf?zc98uj') format('truetype'), url('#{$food-icon-font-path}/food-icon-by-agata-kuczminska.woff?zc98uj') format('woff'), url('#{$food-icon-font-path}/food-icon-by-agata-kuczminska.svg?zc98uj#food-icon-by-agata-kuczminska') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+[class^="food-icon-"], [class*=" food-icon-"] {
+
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'food-icon-by-agata-kuczminska' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.food-icon-01 {
+  &:before {
+    content: $food-icon-01;
+  }
+}
+.food-icon-02 {
+  &:before {
+    content: $food-icon-02;
+  }
+}
+.food-icon-03 {
+  &:before {
+    content: $food-icon-03;
+  }
+}
+.food-icon-04 {
+  &:before {
+    content: $food-icon-04;
+  }
+}
+.food-icon-05 {
+  &:before {
+    content: $food-icon-05;
+  }
+}
+.food-icon-06 {
+  &:before {
+    content: $food-icon-06;
+  }
+}
+.food-icon-07 {
+  &:before {
+    content: $food-icon-07;
+  }
+}
+.food-icon-08 {
+  &:before {
+    content: $food-icon-08;
+  }
+}
+.food-icon-09 {
+  &:before {
+    content: $food-icon-09;
+  }
+}
+.food-icon-10 {
+  &:before {
+    content: $food-icon-10;
+  }
+}
+.food-icon-11 {
+  &:before {
+    content: $food-icon-11;
+  }
+}
+.food-icon-12 {
+  &:before {
+    content: $food-icon-12;
+  }
+}
+.food-icon-13 {
+  &:before {
+    content: $food-icon-13;
+  }
+}
+.food-icon-14 {
+  &:before {
+    content: $food-icon-14;
+  }
+}
+.food-icon-15 {
+  &:before {
+    content: $food-icon-15;
+  }
+}
+.food-icon-16 {
+  &:before {
+    content: $food-icon-16;
+  }
+}
+.food-icon-17 {
+  &:before {
+    content: $food-icon-17;
+  }
+}
+.food-icon-18 {
+  &:before {
+    content: $food-icon-18;
+  }
+}
+.food-icon-19 {
+  &:before {
+    content: $food-icon-19;
+  }
+}
+.food-icon-20 {
+  &:before {
+    content: $food-icon-20;
+  }
+}
+.food-icon-21 {
+  &:before {
+    content: $food-icon-21;
+  }
+}
+.food-icon-22 {
+  &:before {
+    content: $food-icon-22;
+  }
+}
+.food-icon-23 {
+  &:before {
+    content: $food-icon-23;
+  }
+}
+.food-icon-24 {
+  &:before {
+    content: $food-icon-24;
+  }
+}
+.food-icon-25 {
+  &:before {
+    content: $food-icon-25;
+  }
+}
+.food-icon-26 {
+  &:before {
+    content: $food-icon-26;
+  }
+}
+.food-icon-27 {
+  &:before {
+    content: $food-icon-27;
+  }
+}
+.food-icon-28 {
+  &:before {
+    content: $food-icon-28;
+  }
+}
+.food-icon-29 {
+  &:before {
+    content: $food-icon-29;
+  }
+}
+.food-icon-30 {
+  &:before {
+    content: $food-icon-30;
+  }
+}
+.food-icon-31 {
+  &:before {
+    content: $food-icon-31;
+  }
+}
+.food-icon-32 {
+  &:before {
+    content: $food-icon-32;
+  }
+}
+.food-icon-33 {
+  &:before {
+    content: $food-icon-33;
+  }
+}
+.food-icon-34 {
+  &:before {
+    content: $food-icon-34;
+  }
+}
+.food-icon-35 {
+  &:before {
+    content: $food-icon-35;
+  }
+}
+.food-icon-36 {
+  &:before {
+    content: $food-icon-36;
+  }
+}
+.food-icon-37 {
+  &:before {
+    content: $food-icon-37;
+  }
+}
+.food-icon-38 {
+  &:before {
+    content: $food-icon-38;
+  }
+}
+.food-icon-39 {
+  &:before {
+    content: $food-icon-39;
+  }
+}
+.food-icon-40 {
+  &:before {
+    content: $food-icon-40;
+  }
+}
+.food-icon-41 {
+  &:before {
+    content: $food-icon-41;
+  }
+}
+.food-icon-42 {
+  &:before {
+    content: $food-icon-42;
+  }
+}
+.food-icon-43 {
+  &:before {
+    content: $food-icon-43;
+  }
+}
+.food-icon-44 {
+  &:before {
+    content: $food-icon-44;
+  }
+}
+.food-icon-45 {
+  &:before {
+    content: $food-icon-45;
+  }
+}
+.food-icon-46 {
+  &:before {
+    content: $food-icon-46;
+  }
+}
+.food-icon-47 {
+  &:before {
+    content: $food-icon-47;
+  }
+}
+.food-icon-48 {
+  &:before {
+    content: $food-icon-48;
+  }
+}
+.food-icon-49 {
+  &:before {
+    content: $food-icon-49;
+  }
+}
+.food-icon-50 {
+  &:before {
+    content: $food-icon-50;
+  }
+}
+.food-icon-51 {
+  &:before {
+    content: $food-icon-51;
+  }
+}
+.food-icon-52 {
+  &:before {
+    content: $food-icon-52;
+  }
+}
+.food-icon-53 {
+  &:before {
+    content: $food-icon-53;
+  }
+}
+.food-icon-54 {
+  &:before {
+    content: $food-icon-54;
+  }
+}
+.food-icon-55 {
+  &:before {
+    content: $food-icon-55;
+  }
+}

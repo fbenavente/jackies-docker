@@ -1,0 +1,22 @@
+.contact {
+	@extend %section-padding;
+	background: $main-light-color;
+
+	&-with-map {
+		padding-bottom: 0;
+	}
+	&-form {
+		margin-bottom: $margin-large;
+		width: 100%;
+	}
+	.btn {
+		margin-top: $margin-medium;
+	}
+	.google-maps > div {
+		width: 100%;
+		height: 500px;
+	}
+	.scrolloff {
+		pointer-events: none;
+	}
+}
