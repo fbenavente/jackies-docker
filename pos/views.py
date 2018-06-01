@@ -14,6 +14,7 @@ from management.models import (
     Order,
     Product,
     Flavor,
+    Size,
     ProductInOrder,
     CustomUser
 )
@@ -32,16 +33,17 @@ class SugarFreeProductSerializer(object):
     @property
     def flavors(self):
         if not self._flavors:
+            flavors_ids = Product.objects.filter(is_sugar_free=True).distinct('flavor_id').values_list('flavor_id', flat=True)
             # flavors
             flavors = []
-            for flavor in Flavor.objects.filter(category_id=10).order_by('name'):
+            for flavor in Flavor.objects.filter(category_id=10, id__in=flavors_ids).order_by('name'):
                 flavors.append({'name': flavor.name, 'id': flavor.id})
             self._flavors = flavors
         return self._flavors
 
     @property
     def price_data(self):
-        price_data = []
+        price_data = {}
         for flavor in self.flavors:
             for size in self.VALID_SIZE_IDS:
                 if not price_data.get(flavor['id']):
@@ -50,26 +52,43 @@ class SugarFreeProductSerializer(object):
                     price_data[flavor['id']][size] = None
 
                 try:
-                    product = Product.objects.get(category_id=10, flavor_id=flavor['id'], size_id=size)
+                    product = Product.objects.get(category_id=10, flavor_id=flavor['id'], size_id=size, is_sugar_free=True)
                     price_data[flavor['id']][size] = {
                         'price': product.price,
                         'id': product.id,
-                        'image': static('media/' + str(product.image))
+                        'image': static('media/' + str(product.image)),
+                        'size': product.size_name,
+                        'flavor': product.flavor_name
                     }
-                except Exception:
+                except Exception as e:
+                    print(e)
                     price_data[flavor['id']][size] = {
                         'price': 'NON-EXISTING',
                         'id': '',
-                        'image': ''
+                        'image': '',
+                        'size': '',
+                        'flavor': ''
                     }
         return price_data
 
-        @property
-        def data(self):
-            return {
-                'price_data': self.price_data,
-                'flavors': self.flavors
-            }
+    @property
+    def sizes(self):
+        sizes = []
+        size_ids = [16, 6, 8]
+        for size in Size.objects.filter(id__in=size_ids):
+            sizes.append({
+                'id': size.id,
+                'name': size.name
+            })
+        return sizes
+
+    @property
+    def data(self):
+        return {
+            'price_data': self.price_data,
+            'flavors': self.flavors,
+            'sizes': self.sizes
+        }
 
 # TODO: temporal
 def autologin(request):
@@ -178,7 +197,7 @@ def checkout_new_order(request):
 
     cart_list = json.loads(request.POST.get('cart_list'))
     retire_time = request.POST.get('retire_time')
-    retire_hour = request.POST.get('retire_hour')
+    retire_hour = request.POST.get('retire_hour').split(":")[0]
     order_comments = request.POST.get('comments')
     create_order_for_user(cart_list, retire_time, retire_hour, order_comments, user)
     return redirect('pos_orders')
@@ -236,9 +255,15 @@ def order(request, order_id):
         product = order_product.product
 
         if product.size:
-            product_desc = "{} | {} (pedido Nº{})".format(product.flavor, product.size.name, order_product.order_id)
+            if product.is_sugar_free:
+                product_desc = "(SIN AZÚCAR) {} | {} (pedido Nº{})".format(product.flavor, product.size.name, order_product.order_id)
+            else:
+                product_desc = "(SIN AZÚCAR) {} | {} (pedido Nº{})".format(product.flavor, product.size.name, order_product.order_id)
         else:
-            product_desc = "{} | (pedido Nº{})".format(product.flavor, order_product.order_id)
+            if product.is_sugar_free:
+                product_desc = "{} | (pedido Nº{})".format(product.flavor, order_product.order_id)
+            else:
+                product_desc = "{} | (pedido Nº{})".format(product.flavor, order_product.order_id)
 
         if product.flavor:
             product_flavor = product.flavor.name
@@ -290,7 +315,8 @@ def order(request, order_id):
             'data_as_json': json.dumps(data_dict),
             'integer_product_qty': INTEGER_PRODUCT_QTY,
             'float_product_qty': FLOAT_PRODUCT_QTY,
-            'product_families': product_families
+            'product_families': product_families,
+            'sugar_free_data': SugarFreeProductSerializer().data
         }
     )
 
@@ -364,7 +390,8 @@ def sale(request):
             'data_as_json': json.dumps(data_dict),
             'product_families': product_families,
             'integer_product_qty': INTEGER_PRODUCT_QTY,
-            'float_product_qty': FLOAT_PRODUCT_QTY
+            'float_product_qty': FLOAT_PRODUCT_QTY,
+            'sugar_free_data': SugarFreeProductSerializer().data
         }
     )
 
@@ -399,7 +426,8 @@ def new_order(request):
             'product_families': product_families,
             'integer_product_qty': INTEGER_PRODUCT_QTY,
             'float_product_qty': FLOAT_PRODUCT_QTY,
-            'available_users': available_users
+            'available_users': available_users,
+            'sugar_free_data': SugarFreeProductSerializer().data
         }
     )
 
@@ -431,7 +459,7 @@ def web_order(request):
                 price_data[flavor['id']][size] = None
 
             try:
-                product = Product.objects.get(category_id=10, flavor_id=flavor['id'], size_id=size)
+                product = Product.objects.get(category_id=10, flavor_id=flavor['id'], size_id=size, is_sugar_free=False)
                 price_data[flavor['id']][size] = {
                     'price': product.price,
                     'id': product.id,

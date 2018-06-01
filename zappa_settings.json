@@ -10,9 +10,9 @@
         "xray_tracing": false,
         "log_level": "WARNING",
         "debug": false,
-        "domain": "tortasjackies.com",
-        "certificate_arn": "arn:aws:acm:us-east-1:737752328747:certificate/ccb6af16-c06e-4464-b409-a3fcca6581cd",
-        "keep_warm": false,
+        "domain": "www.jackies.cl",
+        "certificate_arn": "arn:aws:acm:us-east-1:737752328747:certificate/3a34d648-b199-42f9-a2cc-c5bd4d5ceea6",
+        "keep_warm": true,
         "environment_variables": {
             "DATABASE_URL": "postgresql://jackies:66p4KUX38Vjnv7G9@jackies.cpf1cemdm0gg.sa-east-1.rds.amazonaws.com/jackies"
         },

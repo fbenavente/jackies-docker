@@ -16,8 +16,6 @@ from _constants.choices import (
 
 class Category(models.Model):
     name = models.CharField(max_length=200, blank=False, null=False, unique=True)
-    short_name = models.CharField(max_length=30, blank=False, unique=True)
-    order = models.IntegerField(unique=True, blank=True, null=True)
     image = models.ImageField(upload_to="uploads/categories/", blank=True, null=True)
 
     def __str__(self):
@@ -41,8 +39,6 @@ class Category(models.Model):
 class Flavor(models.Model):
     category = models.ForeignKey(Category)
     name = models.CharField(max_length=200, blank=False, null=False)
-    short_name = models.CharField(max_length=30, blank=True, null=True)
-    order = models.IntegerField(blank=True, null=True)
     image = models.ImageField(upload_to="uploads/flavors/", blank=True, null=True)
 
     def __str__(self):
@@ -70,8 +66,6 @@ class Flavor(models.Model):
 class Size(models.Model):
     category = models.ForeignKey(Category)
     name = models.CharField(max_length=200, blank=False, null=False)
-    short_name = models.CharField(max_length=30, blank=True, null=True)
-    order = models.IntegerField(blank=True, null=True)
     image = models.ImageField(upload_to="uploads/sizes/", blank=True, null=True)
 
     def __str__(self):
@@ -118,6 +112,18 @@ class Product(models.Model):
             return smart_str(self.category) + " " + smart_str(self.flavor.name)
         else:
             return smart_str(self.category)
+
+    @property
+    def size_name(self):
+        if self.size:
+            return self.size.name
+        return ''
+
+    @property
+    def flavor_name(self):
+        if self.flavor:
+            return self.flavor.name
+        return ''
 
     def get_image_url(self):
         if self.image and hasattr(self.image, 'url'):
@@ -235,6 +241,7 @@ class Order(models.Model):
     status = models.IntegerField(null=True, blank=True, choices=ORDER_STATUS_CODES, default=1)
     total = models.IntegerField(null=True, blank=True)
     # internal fields
+    migrated_from_old_system = models.BooleanField(default=False)
     admin_notes = models.TextField(null=True, blank=True)
     comments = models.TextField(null=True, blank=True)
     factura_required = models.BooleanField(default=False)
@@ -245,6 +252,17 @@ class Order(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+    @property
+    def contains_products_sugar_free(self):
+        products = ProductInOrder.objects.filter(order=self)
+        if products.count() == 0:
+            return False
+
+        for product in products:
+            if product.product.is_sugar_free:
+                return True
+        return False
 
     def _format_product_desc(self, product, product_quantity):
         product_name = product.get_full_name()
@@ -258,11 +276,20 @@ class Order(models.Model):
             else:
                 product_quantity = int(product_quantity)
             if product_size:
-                return '{} {} ({})'.format(product_quantity, product_name, product_size)
+                if product.is_sugar_free:
+                    return '{} {} sin azúcar ({})'.format(product_quantity, product_name, product_size)
+                else:
+                    return '{} {} ({})'.format(product_quantity, product_name, product_size)
             else:
-                return '{} {}'.format(product_quantity, product_name)
+                if product.is_sugar_free:
+                    return '{} {} sin azúcar'.format(product_quantity, product_name)
+                else:
+                    return '{} {}'.format(product_quantity, product_name)
         if product_size:
-            return '{} ({})'.format(product_name, product_size)
+            if product.is_sugar_free:
+                return '{} sin azúcar ({})'.format(product_name, product_size)
+            else:
+                return '{} ({})'.format(product_name, product_size)
         return product_name
 
     @property

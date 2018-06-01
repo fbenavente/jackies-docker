@@ -1,6 +1,14 @@
 from rest_framework import serializers
 from management.models import CustomUser as User
-from management.models import Product, Order, ProductInOrder, Category, Flavor, Background, Size, GlobalValues
+from management.models import (
+    Product,
+    Order,
+    ProductInOrder,
+    Category,
+    Flavor,
+    Background,
+    Size
+)
 from django.contrib.auth.models import Group
 from django.contrib.auth import update_session_auth_hash
 from _constants.constants import WEEDING_SURCHARGE

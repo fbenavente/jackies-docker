@@ -40,7 +40,12 @@
               <span class="label label-danger">Comentarios</span>
           {% endif %}
           </a></td>
-          <td><a href="/pos/order/{{order.id}}">{{ order.description}}</a></td>
+          <td>
+            <a href="/pos/order/{{order.id}}">{{ order.description}}</a>
+            {% if order.contains_products_sugar_free %}
+                <span class="label label-warning">Hay productos sin azúcar</span>
+            {% endif %}
+          </td>
           <td>{{ order.user_info }}</td>
           {% language 'es' %}
             <td>{{ order.comments | safe }}</td>

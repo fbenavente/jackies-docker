@@ -31,7 +31,7 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'order', 'image_html',)
-    search_fields = ('name','short_name',)
+    search_fields = ('name','name',)
 
     def image_html(self,obj):
         return u'<img height="100" src="%s/" />' % (obj.get_image_url())
@@ -41,7 +41,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 class FlavorAdmin(admin.ModelAdmin):
     list_display = ('name', 'category', 'order', 'image_html',)
-    search_fields = ('name','short_name',)
+    search_fields = ('name','name',)
     list_filter = (('category',admin.RelatedOnlyFieldListFilter),)
 
     def image_html(self,obj):
@@ -52,7 +52,7 @@ class FlavorAdmin(admin.ModelAdmin):
 
 class SizeAdmin(admin.ModelAdmin):
     list_display = ('name', 'category', 'order', 'image_html',)
-    search_fields = ('name','short_name',)
+    search_fields = ('name','name',)
     list_filter = (('category',admin.RelatedOnlyFieldListFilter),)
 
     def image_html(self,obj):

@@ -10,6 +10,16 @@
                                         <h4>{{ product_family | to_space | capfirst }}</h4>
                                         <hr class="line">    
                                         <div>
+
+                                        <div class="form-group">
+                                            <div class="checkbox">
+                                             {% if product_family == 'torta_de_panqueque'  %}
+                                                <label><input name="sugar_free" id="sugar_free" type="checkbox" value="">Sin azúcar (diabética):</label>
+                                            {% else %}
+                                                <br>
+                                            {% endif %}
+                                            </div>
+                                        </div>                                      
                                           <div class="form-group">
                                                 <label>Tipo: </label>
                                                 <select id="{{product_family}}_flavors" name="product_flavor" class="form-control input-sm">
