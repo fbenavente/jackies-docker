@@ -142,13 +142,13 @@ def checkout(request):
             order=order,
             product=product,
             quantity=cart_item['product_quantity'],
-            subtotal=cart_item['product_price']
+            subtotal=int(float(cart_item['product_price'])*float(cart_item['product_quantity']))
         )
 
     return redirect('pos_orders')
 
 
-def create_order_for_user(cart_list, retire_time, retire_hour, order_comments, user):
+def create_order_for_user(cart_list, retire_time, retire_hour, order_comments, user, order_source):
     total = 0
     for cart_item in cart_list:
         total += int(float(cart_item['product_price']) * float(cart_item['product_quantity']))
@@ -159,7 +159,7 @@ def create_order_for_user(cart_list, retire_time, retire_hour, order_comments, u
     order = Order.objects.create(
         order_time=arrow.utcnow().datetime,
         retire_time=retire_time.datetime,
-        order_source=2,
+        order_source=order_source,
         status=1,
         user=user,
         comments=order_comments,
@@ -199,7 +199,7 @@ def checkout_new_order(request):
     retire_time = request.POST.get('retire_time')
     retire_hour = request.POST.get('retire_hour').split(":")[0]
     order_comments = request.POST.get('comments')
-    create_order_for_user(cart_list, retire_time, retire_hour, order_comments, user)
+    create_order_for_user(cart_list, retire_time, retire_hour, order_comments, user, 2)
     return redirect('pos_orders')
 
 
@@ -224,11 +224,12 @@ def confirm_order(request):
 
     total = 0
     for cart_item in cart_list:
-        total += int(cart_item['product_price'])
+        total += int(float(cart_item['product_price']) * float(cart_item['product_quantity']))
 
     if total == order.total:  # assuming no changes required
         print ("Same total")
     else:
+        print ("removing all...")
         # remove all product in Order and add the news
         ProductInOrder.objects.filter(order_id=order_id).delete()
         # create products in order
@@ -238,9 +239,10 @@ def confirm_order(request):
                 order=order,
                 product=product,
                 quantity=cart_item['product_quantity'],
-                subtotal=cart_item['product_price']
+                subtotal=int(float(cart_item['product_price'])*float(cart_item['product_quantity']))
             )
     order.status = 2  # delivered
+    order.total = total
     order.save()
     return redirect('pos_orders')
 
@@ -258,7 +260,7 @@ def order(request, order_id):
             if product.is_sugar_free:
                 product_desc = "(SIN AZÚCAR) {} | {} (pedido Nº{})".format(product.flavor, product.size.name, order_product.order_id)
             else:
-                product_desc = "(SIN AZÚCAR) {} | {} (pedido Nº{})".format(product.flavor, product.size.name, order_product.order_id)
+                product_desc = "{} | {} (pedido Nº{})".format(product.flavor, product.size.name, order_product.order_id)
         else:
             if product.is_sugar_free:
                 product_desc = "{} | (pedido Nº{})".format(product.flavor, order_product.order_id)
@@ -379,7 +381,9 @@ def sale(request):
         "merenguitos",
         "kuchen",
         "garrapinadas",
-        "productos_especiales"
+        "productos_especiales",
+        "cajita_de_brownies",
+        "paquete_navideno"
     ]
 
     return render(
@@ -411,11 +415,13 @@ def new_order(request):
         "merenguitos",
         "kuchen",
         "garrapinadas",
-        "productos_especiales"
+        "productos_especiales",
+        "cajita_de_brownies",
+        "paquete_navideno"
+
     ]
 
     available_users = CustomUser.objects.filter(is_admin=False, is_active=True).exclude(id=6)
-
     return render(
         request,
         'pos/new_order.html',
@@ -434,7 +440,16 @@ def new_order(request):
 
 def web_order(request):
     # 4 sabores, 11 diabetica, maracuya-manjar, chocolate guinda
-    BLACKLIST_FLAVORS = [11, 13, 35]
+    BLACKLIST_FLAVORS = [
+        11,
+        13,
+        35,
+        53,
+        52,
+        51,
+        25,  # limon
+        30   # limon-frambuesa
+    ]
     VALID_SIZE_IDS = [16, 6, 8, 13]
     # flavors
     flavors = []
@@ -466,6 +481,7 @@ def web_order(request):
                     'image': static('media/' + str(product.image))
                 }
             except Exception as e:
+                print ("no found", flavor['id'], flavor['name'], size)
                 price_data[flavor['id']][size] = {
                     'price': 'NON-EXISTING',
                     'id': '',
@@ -500,8 +516,8 @@ def web_checkout(request):
     cart_list = json.loads(request.POST.get('cart_list'))
     retire_time = request.POST.get('retire_time')
     retire_hour = DEFAULT_RETIRE_HOUR
-    order_comments = ''
-    order = create_order_for_user(cart_list, retire_time, retire_hour, order_comments, user)
+    order_comments = request.POST.get('comments') or ''
+    order = create_order_for_user(cart_list, retire_time, retire_hour, order_comments, user, 1)
 
     email_attrs = {
         'FULL_NAME': order.user.full_name,

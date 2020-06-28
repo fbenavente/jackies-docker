@@ -226,10 +226,12 @@
         }
 
         $(document).ready(function(){
+            console.log("1");
             var product_families = {{ product_families | safe }};
             // create listeners
             for (var i = 0; i<product_families.length; i++){
                 // set inmediatly values
+                console.log("set:", product_families[i]);
                 if (isSingleFlavor(product_families[i]) === true && isSingleSize(product_families[i]) === true){
                     setProductValuesFor(product_families[i], '', '');
                 }

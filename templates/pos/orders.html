@@ -36,8 +36,8 @@
           
           <td><a href="/pos/order/{{order.id}}">
           #{{ order.id }}
-          {% if order.comments %}
-              <span class="label label-danger">Comentarios</span>
+          {% if order.order_source == 1 %}
+              <span class="label label-danger">Internet</span>
           {% endif %}
           </a></td>
           <td>
