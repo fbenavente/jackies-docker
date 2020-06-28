@@ -114,9 +114,22 @@ class Product(models.Model):
             return smart_str(self.category)
 
     @property
+    def full_name(self):
+        if self.flavor:
+            return smart_str(self.category) + " " + smart_str(self.flavor.name)
+        else:
+            return smart_str(self.category)
+
+    @property
     def size_name(self):
         if self.size:
             return self.size.name
+        return ''
+
+    @property
+    def category_name(self):
+        if self.category:
+            return self.category.name
         return ''
 
     @property
@@ -212,7 +225,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     # On Python 3: def __str__(self):
     def __str__(self):
-        return self.email.split("@")[0]
+        return self.full_name
 
     def get_image_url(self):
         if self.profile_image and hasattr(self.profile_image, 'url'):

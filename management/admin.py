@@ -1,5 +1,8 @@
 from django.contrib import admin
+from rangefilter.filter import DateRangeFilter, DateTimeRangeFilter
 from management.models import *
+from django.db.models import Q
+
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('pk', 'category', 'flavor', 'size', 'price','thumbnail_html',)
@@ -11,15 +14,20 @@ class ProductAdmin(admin.ModelAdmin):
     thumbnail_html.allow_tags = True
     thumbnail_html.short_description = "Imagen"
 
+
 class ProductInOrderInline(admin.TabularInline):
     model = ProductInOrder
     extra = 1
 
+
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'order_time','retire_time','order_source','status','total',)
-    search_fields = ('id', )
+    list_display = ('id', 'description', 'retire_time','order_source','status','total', 'user')
+    search_fields = ('id', 'total')
     inlines = (ProductInOrderInline,)
-    list_filter = ('order_time', 'retire_time', 'order_source', 'status',)
+    list_filter = (
+        ('retire_time', DateRangeFilter),
+        'status',
+    )
 
 class CustomUserAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'email', 'phone_number', )
@@ -29,9 +37,15 @@ class CustomUserAdmin(admin.ModelAdmin):
         'email': 'Correo',
     }
 
+    def get_search_results(self, request, queryset, search_term):
+        queryset, use_distinct = super(CustomUserAdmin, self).get_search_results(request, queryset, search_term)
+        queryset = self.model.objects.filter(Q(full_name__unaccent__icontains=search_term) | Q(email=search_term)) 
+        return queryset, use_distinct
+
+
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'order', 'image_html',)
-    search_fields = ('name','name',)
+    search_fields = ('name', 'name',)
 
     def image_html(self,obj):
         return u'<img height="100" src="%s/" />' % (obj.get_image_url())
