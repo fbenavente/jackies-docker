@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+import raven
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
@@ -38,8 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
+    'django.contrib.humanize',
     'django_extensions',
     'django_nose',
+    'raven.contrib.django.raven_compat',
     'rest_framework',
     'jackies_store',
     'orders',
@@ -47,7 +51,8 @@ INSTALLED_APPS = [
     'pos',
     'management',
     'sorl.thumbnail',
-    'storages'
+    'storages',
+    'rangefilter'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -155,7 +160,6 @@ AWS_LOCATION = 'static'
 STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-
 REST_FRAMEWORK = {
  # Use Django's standard `django.contrib.auth` permissions,
  # or allow read-only access for unauthenticated users.
@@ -169,3 +173,8 @@ REST_FRAMEWORK = {
 }
 
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 365
+
+
+RAVEN_CONFIG = {
+    'dsn': 'https://7e64f0886d7c4fd487a0edf70447e1d1:cdecbd3cbd8c411d8344efd0e07ea614@sentry.io/1218295',
+}

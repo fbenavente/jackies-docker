@@ -9,4 +9,4 @@ LOGIN_REDIRECT_URL = '/management/auth/login/'
 
 SECRET_KEY = 'jasdfnasdioufb'
 
-ALLOWED_HOSTS = ['2g1nm7hxt4.execute-api.sa-east-1.amazonaws.com', 'tortasjackies.com']
+ALLOWED_HOSTS = ['2g1nm7hxt4.execute-api.sa-east-1.amazonaws.com', 'tortasjackies.com', 'jackies.cl', 'www.jackies.cl']
