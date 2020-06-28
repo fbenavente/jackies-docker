@@ -8,7 +8,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
     <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Material Dashboard by Creative Tim</title>
+    <title>Dashboard</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
@@ -45,7 +45,7 @@
                             <p>Resumen</p>
                         </a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="/dashboard/sales/">
                             <i class="material-icons">poll</i>
                             <p>Ventas mensuales</p>
@@ -57,7 +57,7 @@
                             <p>Ventas por año</p>
                         </a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="/dashboard/sales_by_type/">
                             <i class="material-icons">pie_chart</i>
                             <p>Ventas por tipo</p>
@@ -78,21 +78,25 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header" data-background-color="blue">
-                                    <h4 class="title">Ventas mensuales (monto)</h4>
-                                    <p class="category">Últimos 12 meses</p>
+                                    <h4 class="title">Ventas por sabor (Unidades) - Toda la historia</h4>
+                                    <p class="category">Torta de panqueques</p>
                                 </div>
                                 <div class="card-content table-responsive">
-                                    <canvas id="myChart4" width="400" height="300"></canvas>
+                                    <canvas id="pie-chart" width="800" height="450"></canvas>
                                 </div>
+                                
                             </div>
+                        </div>
+                        <div class="col-md-12">
                             <div class="card">
-                                <div class="card-header" data-background-color="purple">
-                                    <h4 class="title">Ventas mensuales (unidades)</h4>
-                                    <p class="category">Últimos 12 meses</p>
+                                <div class="card-header" data-background-color="blue">
+                                    <h4 class="title">Ventas por tamaño (Unidades) - Toda la historia</h4>
+                                    <p class="category">Torta de panqueques</p>
                                 </div>
                                 <div class="card-content table-responsive">
-                                    <canvas id="myChart5" width="400" height="300"></canvas>
+                               <canvas id="pie-chart2" width="800" height="450"></canvas>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -130,82 +134,40 @@
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-
 <script>
-var ctx = document.getElementById("myChart4").getContext('2d');
-var dataset = {{ monthly_amounts.datasets | safe }};
-var myChart = new Chart(ctx, {
-    type: 'bar',
+new Chart(document.getElementById("pie-chart"), {
+    type: 'pie',
     data: {
-        labels: {{ monthly_amounts.labels | safe }},
-        datasets: dataset,
+      labels: {{ per_flavor.labels | safe }},
+      datasets: {{ per_flavor.datasets | safe }}
     },
-options: {
-    tooltips: {
-      displayColors: true,
-      callbacks:{
-        mode: 'x',
+    options: {
+      title: {
+        display: false,
+        text: 'Por sabor'
       },
-    },
-    scales: {
-      xAxes: [{
-        stacked: true,
-        gridLines: {
-          display: false,
-        }
-      }],
-      yAxes: [{
-        stacked: true,
-        ticks: {
-          beginAtZero: true,
-        },
-        type: 'linear',
-      }]
-    },
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: { position: 'bottom' },
-    }
-});
-</script>
-<script>
-var ctx = document.getElementById("myChart5").getContext('2d');
-var dataset = {{ monthly_units.datasets | safe }};
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: {{ monthly_units.labels | safe }},
-        datasets: dataset,
-    },
-options: {
-    tooltips: {
-      displayColors: true,
-      callbacks:{
-        mode: 'x',
-      },
-    },
-    scales: {
-      xAxes: [{
-        stacked: true,
-        gridLines: {
-          display: false,
-        }
-      }],
-      yAxes: [{
-        stacked: true,
-        ticks: {
-          beginAtZero: true,
-        },
-        type: 'linear',
-      }]
-    },
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: { position: 'bottom' },
+      legend:{
+        display: true
+      }
     }
 });
 </script>
 
+<script>
+new Chart(document.getElementById("pie-chart2"), {
+    type: 'pie',
+    data: {
+      labels: {{ per_size.labels | safe }},
+      datasets: {{ per_size.datasets | safe }}
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Por tamaño'
+      }
+    }
+});
+</script>
 
 
 </html>
