@@ -13,6 +13,10 @@ function removeOptions(selectbox)
 function setProductValuesFor(productFamily, flavor, size, sugar_free_data, data_as_json){
     var flavorSelectId = productFamily + "_flavors";
     var sizeSelectId = productFamily + "_sizes";
+    console.log("2");
+    console.log("productFamily:::", productFamily);
+    console.log("flavor:", flavor);
+    console.log("size:", size);
 
     if (flavor == ''){
         var flavorSelect = document.getElementById(flavorSelectId);
@@ -163,6 +167,7 @@ function isSingleFlavor(productFamily, data_as_json){
 
 function createListeners(product_families, sugar_free_data, data_flavors, data_as_json){
     // special listener
+    console.log("HERE");
     $("#sugar_free").change(function() {
         if(this.checked) {
             removeOptions(document.getElementById("torta_de_panqueque_flavors"));

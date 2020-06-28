@@ -15,9 +15,30 @@
     <link rel="stylesheet" href="{% static 'css/theme.css' %}">
     <link href="//code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="stylesheet">
     <link href="//cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <!-- Facebook Pixel Code -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '949442118550249');
+      fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=949442118550249&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Facebook Pixel Code -->
 
 </head>
 <body>
+<script>
+  fbq('track', 'InitiateCheckout');
+</script>
+
        <nav class="navbar navbar-fixed-top shadow navbar-fixed-active" id="js-nav">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -219,8 +240,8 @@
  monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
  monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
  dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
- dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
- dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+ dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie', 'Sab'],
+ dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi', 'Sa'],
  weekHeader: 'Sm',
  dateFormat: 'dd/mm/yy',
  firstDay: 1,
@@ -230,14 +251,11 @@
  };
  $.datepicker.setDefaults($.datepicker.regional['es']);
         $( "#datepicker" ).datepicker({
-                minDate: 2,
+                minDate: 3,
                 maxDate: 30,
                 defaultDate: +2,
                 required: true,
-                beforeShowDay: function(date) {
-                    var day = date.getDay();
-                    return [(day != 0), ''];
-                }
+                beforeShowDay: $.datepicker.noWeekends
         });
     });
   </script>

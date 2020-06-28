@@ -129,6 +129,7 @@
             toolbarButtonPanel.append('<div><input name="full_name" required class="form-control" type="text" placeholder="Nombre completo"></input></div>');
             toolbarButtonPanel.append('<div><input name="email" required class="form-control" type="email" placeholder="Correo"></input></div>');
             toolbarButtonPanel.append('<div><input name="phone_number" class="form-control" type="text" placeholder="Teléfono"></input></div>');
+            toolbarButtonPanel.append('<textarea class="form-control" name="comments" id="comments" rows="2" placeholder="Comentarios (opcional)"></textarea>');
             toolbarButtonPanel.append('<br><h5 style="text-align:left;color:#c19c62;" class="">Seleccione día entrega:</h5>');
             toolbarButtonPanel.append('<small>(Retiro en tienda: Reusch 424, Temuco)</small>');
             toolbarButtonPanel.append('<input class="form-control" required name="retire_time" id="datepicker">');
@@ -413,7 +414,8 @@
               var fields = formElm.serializeArray();
               var len = fields.length;
               for (var i=0; i<len; i++) {
-                if (!fields[i].value){
+                console.log(fields[i]);
+                if (!fields[i].value && fields[i].name !== 'comments'){
                   alert("Completa tus datos y el día de retiro");
                   return false;
                 }            
