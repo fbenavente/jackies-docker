@@ -11,11 +11,12 @@
         <meta name="viewport" content="width=device-width">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="author" content="Ignacio Hermosilla">
+        <script src="https://use.fontawesome.com/96861f6bf6.js"></script>
         <link rel="icon" type="image/png" href="img/favicon.png"/>
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700%7CAlex+Brush%7CPhilosopher:400,700,900" rel="stylesheet">
 
         <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-        <link rel="stylesheet" href="{% static 'css/theme.css' %}"> 
+        <link rel="stylesheet" href="{% static 'css/theme.css' %}">
         <!-- Facebook Pixel Code -->
         <script>
           !function(f,b,e,v,n,t,s)
@@ -41,6 +42,13 @@
         <script>
             fbq('track', 'ViewContent');
         </script>
+
+        <div class="pagos_info">
+          <button type="button" class="btn btn-info btn_informacion" data-toggle="modal" data-target="#infoModal">
+             <i class="fa fa-info-circle fa-2x"></i>
+           </button>
+        </div>
+
         <nav class="navbar navbar-fixed-top shadow navbar-fixed-active" id="js-nav">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -72,7 +80,7 @@
                  <span class="load-text">Cargando...</span>
              </div>
          </div>
-     
+
         <section class="home" id="inicio">
             <div class="">
                 <div class="home-slider text-center">
@@ -189,7 +197,7 @@
                                 </span>
                             </a>
                         </li>
-                    </ul> 
+                    </ul>
                 </div>
             </div>
         </section>
@@ -234,7 +242,7 @@
                                     <span class=""><img class="wow fadeInUp js-rotate" data-wow-delay=".6s" src="{% static 'img/asterix.svg' %}" alt="decor" width="20" height="20"></span>
                                 </span>
                             </h2>
-                            <p> Utilizamos solo ingredientes naturales y frescos de primera calidad. Seleccionamos rigurosamente a nuestros proveedores, privilegiando lo local y manteniendo una estrecha relación con ellos, para asegurar la mejor calidad y frescura de nuestros ingredientes.  
+                            <p> Utilizamos solo ingredientes naturales y frescos de primera calidad. Seleccionamos rigurosamente a nuestros proveedores, privilegiando lo local y manteniendo una estrecha relación con ellos, para asegurar la mejor calidad y frescura de nuestros ingredientes.
                             </p>
                             <a class="btn btn-primary btn-lg" href="/pos/web_order/">Hacer pedido</a>
                         </div>
@@ -253,7 +261,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="main-heading ">Servicios especiales <span>Tortas y productos especiales.</span>
-                            <span class="main-heading-decor">                          
+                            <span class="main-heading-decor">
                                 <span class="">
 
                                     <img class="wow fadeInUp js-rotate" data-wow-delay=".2s" src="{% static 'img/asterix.svg' %}" alt="decor" width="20" height="20">
@@ -276,14 +284,14 @@
                                 <span class="services-name h3">Matrimonios</span>
                                 <span class="services-description">Fabricamos tortas especiales para matrimonios, conservando nuestra esencia y sabor y agregando la decoración y estilo que necesites.</span>
                                 <span href="tel:452314181" class="">Consulta al teléfono 45 2314181</span>
-                            </a> 
+                            </a>
                         </li>
                         <li class="col-md-6 col-sm-6 col-xs-6 wow fadeInUp" data-wow-delay="0.4s">
                             <a href="tel:452314181" class="">
                                 <span class="services-name h3">Decoración especial</span>
                                 <span class="services-description">Si deseas tortas con algún tipo de decoración de tu preferencia, ya sea para cumpleaños, aniversarios, etc, llámanos.</span>
                                 <span href="tel:452314181" class="">Consulta al teléfono 45 2314181</span>
-                            </a> 
+                            </a>
                         </li>
                     </ul>
 
@@ -369,8 +377,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="main-heading">Contacto<span> Local: Reusch 424, Temuco.</span>
-                            <span class="main-heading-decor"> 
-                                <small>                         
+                            <span class="main-heading-decor">
+                                <small>
                                 Horarios de atención: Lunes a Viernes de 10:00 a 18:00
                                 </small>
                                 <br>
@@ -388,6 +396,21 @@
             </div>
         </section>
 
+
+        <!-- Modal -->
+        <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <img src="{% static 'images/info_image.jpg' %}" width="100%" />
+              </div>
+              <div class="modal-footer" style="padding: 1rem">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <script src="{% static 'js/vendor/wow.js' %}"></script>
         <script src="{% static 'js/vendor/jquery-1.11.2.min.js' %}"></script>
         <script src="{% static 'js/vendor/swiper.min.js' %}"></script>
@@ -395,6 +418,6 @@
         <script src="{% static 'js/vendor/jquery.countTo.js' %}"></script>
         <script src="{% static 'js/vendor/jquery.inview.js' %}"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_6m6Glf1-P7jvVdHZ00e3Ue_EoUNe39g"></script>
-        <script src="{% static 'js/main.js' %}"></script> 
+        <script src="{% static 'js/main.js' %}"></script>
     </body>
 </html>
