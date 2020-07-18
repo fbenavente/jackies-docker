@@ -39,7 +39,7 @@ class CustomUserAdmin(admin.ModelAdmin):
 
     def get_search_results(self, request, queryset, search_term):
         queryset, use_distinct = super(CustomUserAdmin, self).get_search_results(request, queryset, search_term)
-        queryset = self.model.objects.filter(Q(full_name__unaccent__icontains=search_term) | Q(email=search_term)) 
+        queryset = self.model.objects.filter(Q(full_name__unaccent__icontains=search_term) | Q(email=search_term))
         return queryset, use_distinct
 
 
@@ -90,9 +90,20 @@ class GlobalValuesAdmin(admin.ModelAdmin):
     list_display = ('key', 'int_value', 'char_value',)
     search_fields = ('key',)
 
+class CostItemAdmin(admin.ModelAdmin):
+    list_display = ('name', 'unit',)
+    search_fields = ('name','unit',)
+
+class CostAdmin(admin.ModelAdmin):
+    list_display = ('cost_item', 'quantity', 'total', 'date',)
+    search_fields = ('cost_item',)
+    list_filter = ('date',('cost_item',admin.RelatedOnlyFieldListFilter),)
+
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Product, ProductAdmin)
+admin.site.register(CostItem, CostItemAdmin)
+admin.site.register(Cost, CostAdmin)
 #admin.site.register(Category, CategoryAdmin)
 #admin.site.register(Flavor, FlavorAdmin)
 #admin.site.register(Size, SizeAdmin)
