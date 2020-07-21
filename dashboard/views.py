@@ -168,24 +168,42 @@ class BySKU(object):
 
     @property
     def datasets(self):
-        # group by product
+        """
+        class ProductInOrder(models.Model):
+            order = models.ForeignKey(Order)
+            product = models.ForeignKey(Product)
+            quantity = models.DecimalField(max_digits=4, decimal_places=1)
+            wedding = models.BooleanField(default=False)
+            decoration = models.IntegerField(null=True, blank=True, choices=DECORATION_OPTIONS, default=1)
+            subtotal = models.IntegerField(null=True, blank=True)
+        """
+        results = []
         q = ProductInOrder.objects.filter(
             order__retire_time__gte=self.from_date.datetime,
             order__retire_time__lte=self.to_date.datetime,
             order__status=2
-        ).values('order__product').annotate(total=Sum('subtotal'), count=Sum('quantity')).order_by('total')
-        results = []
+        ).select_related('product').distinct('product_id')
         for r in q:
-            if r['total'] == 0 or not r['total']:
-                continue
-            product = Product.objects.get(pk=r['order__product'])
+            # get count and total
+            total = float(ProductInOrder.objects.filter(
+                order__retire_time__gte=self.from_date.datetime,
+                order__retire_time__lte=self.to_date.datetime,
+                order__status=2,
+                product_id=r.product_id
+            ).aggregate(Sum('subtotal'))['subtotal__sum'] or 0.0)
+            quantity = float(ProductInOrder.objects.filter(
+                order__retire_time__gte=self.from_date.datetime,
+                order__retire_time__lte=self.to_date.datetime,
+                order__status=2,
+                product_id=r.product_id
+            ).aggregate(Sum('quantity'))['quantity__sum'] or 0.0)
             results.append({
-                'id': r['order__product'],
-                'count': r['count'],
-                'size': product.size_name,
-                'flavor': product.flavor_name,
-                'category': product.category_name,
-                'total': r['total']
+                'id': r.product_id,
+                'count': quantity,
+                'size': r.product.size_name,
+                'flavor': r.product.flavor_name,
+                'category': r.product.category_name,
+                'total': total
             })
         return results
 
@@ -201,7 +219,6 @@ class BySKUCount(object):
 
     @property
     def datasets(self):
-        # group by product
         q = ProductInOrder.objects.filter(
             order__retire_time__gte=self.from_date.datetime,
             order__retire_time__lte=self.to_date.datetime,
@@ -400,7 +417,7 @@ class MonthlySalesUnits(object):
 
             datasets[0]['data'].append(int(total_panqueque['quantity__sum'] or 0))
             datasets[1]['data'].append(int(total_torta['quantity__sum'] or 0))
-            datasets[2]['data'].append(int(total_brownie['quantity__sum' or 0]))
+            datasets[2]['data'].append(int(total_brownie['quantity__sum'] or 0))
             datasets[3]['data'].append(int(total_queque['quantity__sum'] or 0))
             datasets[4]['data'].append(int(total_galletas['quantity__sum'] or 0))
         return datasets
