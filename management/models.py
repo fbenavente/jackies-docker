@@ -390,3 +390,28 @@ class Background(models.Model):
     class Meta:
         app_label = 'management'
         db_table = 'background'
+
+class CostItem(models.Model):
+    name = models.CharField(max_length=200, blank=False, null=False)
+    unit = models.CharField(max_length=200, blank=True, null=True)
+
+    def __str__(self):
+        return smart_str(self.name) + " (" + smart_str(self.unit) + ")"
+
+    class Meta:
+        app_label = 'management'
+        db_table = 'cost_item'
+
+class Cost(models.Model):
+    cost_item = models.ForeignKey(CostItem)
+    quantity = models.DecimalField(max_digits=6, decimal_places=1)
+    total = models.IntegerField(null=True, blank=True)
+    date = models.DateField(default=timezone.now)
+
+    def __str__(self):
+        return smart_str(self.cost_item) + " - " + smart_str(self.total)
+
+    class Meta:
+        unique_together = (("cost_item", "date"),)
+        app_label = 'management'
+        db_table = 'cost'
