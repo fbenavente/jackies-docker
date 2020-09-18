@@ -97,6 +97,8 @@ class CostItemAdmin(admin.ModelAdmin):
 class CostAdmin(admin.ModelAdmin):
     list_display = ('cost_item', 'quantity', 'total', 'date',)
     search_fields = ('cost_item',)
+    date_hierarchy = 'date'
+    ordering = ('cost_item','-date',)
     list_filter = ('date',('cost_item',admin.RelatedOnlyFieldListFilter),)
 
 admin.site.register(CustomUser, CustomUserAdmin)

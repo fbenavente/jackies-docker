@@ -22,7 +22,7 @@
     <link href="{% static 'vendors/pickadate/themes/default.css' %}" rel="stylesheet" type="text/css" />
     <link href="{% static 'vendors/pickadate/themes/default.date.css' %}" rel="stylesheet" type="text/css" />
     <link href="{% static 'vendors/pickadate/themes/default.time.css' %}" rel="stylesheet" type="text/css" />
-    
+
     <!--     Fonts and icons     -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
@@ -58,6 +58,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="/dashboard/incomes_costs/">
+                            <i class="material-icons">poll</i>
+                            <p>Ingresos VS Costos</p>
+                        </a>
+                    </li>
+                    <li>
                         <a href="/dashboard/sales_by_year/">
                             <i class="material-icons">show_chart</i>
                             <p>Ventas por año</p>
@@ -80,8 +86,8 @@
         </div>
         <div class="main-panel">
             <div class="content">
-                <div class="container-fluid"> 
-                     <form action="/dashboard/sales_by_sku/" method="GET"> 
+                <div class="container-fluid">
+                     <form action="/dashboard/sales_by_sku/" method="GET">
                         <div class="container">
                                 <div class='col-md-5'>
                                     <div class="form-group">
@@ -137,7 +143,7 @@
                                               <td>{{ row.size }}</td>
 
                                               <td>${{ row.total | intcomma }}</td>
-                                              
+
                                               <td>{{ row.count }}</td>
                                           </tr>
                                         {% endfor %}
@@ -148,11 +154,11 @@
                                             <td></td>
 
                                             <td><strong>${{ total | intcomma }}</strong></td>
-                                            
+
                                             <td><strong>{{count}}</strong></td>
                                         </tr>
                                       </table>
-                                </div>                                
+                                </div>
                             </div>
                         </div>
                     </div>

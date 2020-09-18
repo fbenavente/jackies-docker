@@ -51,6 +51,12 @@
                             <p>Ventas mensuales</p>
                         </a>
                     </li>
+                    <li>
+                        <a href="/dashboard/incomes_costs/">
+                            <i class="material-icons">poll</i>
+                            <p>Ingresos VS Costos</p>
+                        </a>
+                    </li>
                     <li class="active">
                         <a href="/dashboard/sales_by_year/">
                             <i class="material-icons">show_chart</i>
@@ -74,7 +80,7 @@
         </div>
         <div class="main-panel">
             <div class="content">
-                <div class="container-fluid">    
+                <div class="container-fluid">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header" data-background-color="blue">
@@ -84,7 +90,7 @@
                                 <div class="card-content table-responsive">
                                     <canvas id="line-chart" width="800" height="450"></canvas>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -126,7 +132,7 @@
 <script>
 var inputDataSet = {{ per_year.datasets | safe }};
 var datasets = [];
-for (i = 0; i < inputDataSet.length; i++) { 
+for (i = 0; i < inputDataSet.length; i++) {
     datasets.push({fill: false,  label: inputDataSet[i].label, borderColor: inputDataSet[i].borderColor, data: inputDataSet[i].data});
 }
 new Chart(document.getElementById("line-chart"), {

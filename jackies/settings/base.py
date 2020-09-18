@@ -27,6 +27,9 @@ BASE_DIR = os.path.abspath(__file__ + "/../../../")
 DEBUG = True
 
 ALLOWED_HOSTS = []
+DECIMAL_SEPARATOR = ','
+THOUSAND_SEPARATOR = '.'
+USE_THOUSAND_SEPARATOR = True
 
 
 # Application definition

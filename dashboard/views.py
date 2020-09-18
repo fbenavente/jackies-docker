@@ -1,12 +1,12 @@
 from django.shortcuts import render
 import arrow
 import random
-from management.models import ProductInOrder, Order, Product
+from management.models import ProductInOrder, Order, Product, Cost
 from django.db.models import Sum, Count
 from django.db import connection
 from django.db.models import Q
 from babel.numbers import format_currency
-from django.contrib.admin.views.decorators import staff_member_required   
+from django.contrib.admin.views.decorators import staff_member_required
 
 @staff_member_required
 def dashboard(request):
@@ -15,7 +15,7 @@ def dashboard(request):
     amount_this_month = Order.objects.filter(retire_time__gte=now.datetime, status=2).aggregate(Sum('total'))['total__sum'] or 0.0
     count_this_month = int(ProductInOrder.objects.filter(order__retire_time__gte=now.datetime, order__status=2).aggregate(Sum('quantity'))['quantity__sum'] or 0)
     open_now = Order.objects.filter(retire_time__gte=now.datetime, status__in=[1, 4, 5]).aggregate(Count('total'))['total__count']
-    
+
     # internet information
     internet_sales_count = Order.objects.filter(retire_time__gte=now.datetime, order_source=1, status=2).aggregate(Count('total'))['total__count']
     no_internet_sales_count = Order.objects.filter(retire_time__gte=now.datetime, status=2).exclude(order_source=1).aggregate(Count('total'))['total__count']
@@ -134,6 +134,15 @@ def sales(request):
         context = {'monthly_amounts': m.data, 'monthly_units': u.data}
     )
 
+@staff_member_required
+def incomes_vs_costs(request):
+    m = MonthlyIncomesCosts(arrow.now().shift(months=-12), arrow.now())
+    return render(
+        request,
+        'dashboard/incomes_vs_costs.html',
+        context = {'monthly_amounts': m.data}
+    )
+
 
 class PerProductFlavorUnits(object):
     @property
@@ -141,7 +150,7 @@ class PerProductFlavorUnits(object):
         data = {'labels': [], 'datasets': [{'label': "XYZ", 'backgroundColor': [], 'data': []}]}
         q = ProductInOrder.objects.filter(product__category_id=10).values('product__flavor__name', 'product__flavor_id').annotate(total=Count('product__flavor_id')).order_by('total')
         for r in q:
-            color = lambda: random.randint(0,255) 
+            color = lambda: random.randint(0,255)
             data['labels'].append(r['product__flavor__name'])
             data['datasets'][0]['backgroundColor'].append('#%02X%02X%02X' % (color(),color(),color()))
             data['datasets'][0]['data'].append(r['total'])
@@ -154,7 +163,7 @@ class PerProductSizeUnits(object):
         data = {'labels': [], 'datasets': [{'label': "XYZ", 'backgroundColor': [], 'data': []}]}
         q = ProductInOrder.objects.filter(product__category_id=10).values('product__size__name', 'product__size_id').annotate(total=Count('product__size_id')).order_by('total')
         for r in q:
-            color = lambda: random.randint(0,255) 
+            color = lambda: random.randint(0,255)
             data['labels'].append(r['product__size__name'])
             data['datasets'][0]['backgroundColor'].append('#%02X%02X%02X' % (color(),color(),color()))
             data['datasets'][0]['data'].append(r['total'])
@@ -321,7 +330,7 @@ class MonthlySalesMoney(object):
                 order__status=2,
                 product__category_id=2
             ).aggregate(Sum('subtotal'))
-            
+
             datasets[0]['data'].append(total_panqueque['subtotal__sum'] or 0)
             datasets[1]['data'].append(total_torta['subtotal__sum'] or 0)
             datasets[2]['data'].append(total_brownie['subtotal__sum'] or 0)
@@ -455,7 +464,7 @@ class YearSalesMoney(object):
         datasets = []
         for from_on_year, to_on_year in arrow.Arrow.span_range('year', self.from_date, self.to_date):
             color = color_set[selected_color]
-            selected_color += 1 
+            selected_color += 1
             dataset = {
                 'label': from_on_year.format('YYYY'),
                 'borderColor': color,
@@ -479,4 +488,72 @@ class YearSalesMoney(object):
             'datasets': self.datasets
         }
 
+class MonthlyIncomesCosts(object):
+    def __init__(self, from_date=None, to_date=None):
+        self.from_date = from_date
+        self.to_date = to_date
 
+    @property
+    def labels(self):
+        labels = []
+        for floor, _ in arrow.Arrow.span_range('month', self.from_date, self.to_date):
+            labels.append(floor.format('MMM YYYY'))
+        return labels
+
+    @property
+    def datasets(self):
+        datasets = [
+            {
+                'type':'bar',
+                'label': 'Incomes',
+				'backgroundColor': 'rgba(0, 0, 255, 0.5)',
+				'borderColor': 'rgba(0, 0, 255, 1)',
+				'borderWidth': 1,
+                'data': [],
+            },
+            {
+                'type':'bar',
+                'label': 'Costs',
+				'backgroundColor': 'rgba(255, 0, 0, 0.5)',
+				'borderColor': 'rgba(255, 0, 0, 1)',
+				'borderWidth': 1,
+                'data': [],
+            },
+            {
+                'type':'line',
+                'label': 'Profits',
+				'borderColor': 'rgba(50, 205, 50, 1)',
+				'borderWidth': 2,
+				'fill': 'false',
+                'data': [],
+            }
+        ]
+
+        for from_on_month, to_on_month in arrow.Arrow.span_range('month', self.from_date, self.to_date):
+            total_in = Order.objects.filter(
+                retire_time__gte=from_on_month.datetime,
+                retire_time__lte=to_on_month.datetime,
+                status=2
+            ).aggregate(Sum('total'))
+            if not total_in['total__sum']:
+                total_in['total__sum'] = 0
+
+            total_costs = Cost.objects.filter(
+                date__gte=from_on_month.datetime,
+                date__lte=to_on_month.datetime
+            ).aggregate(Sum('total'))
+            if not total_costs['total__sum']:
+                total_costs['total__sum'] = 0
+
+            datasets[0]['data'].append(total_in['total__sum']/1.19 or 0)
+            datasets[1]['data'].append(total_costs['total__sum'] or 0)
+            datasets[2]['data'].append(((total_in['total__sum']/1.19) - total_costs['total__sum'])  or 0)
+
+        return datasets
+
+    @property
+    def data(self):
+        return {
+            'labels': self.labels,
+            'datasets': self.datasets
+        }

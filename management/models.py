@@ -401,6 +401,7 @@ class CostItem(models.Model):
     class Meta:
         app_label = 'management'
         db_table = 'cost_item'
+        ordering = ['name',]
 
 class Cost(models.Model):
     cost_item = models.ForeignKey(CostItem)
