@@ -95,7 +95,7 @@ class CostItemAdmin(admin.ModelAdmin):
     search_fields = ('name','unit',)
 
 class CostAdmin(admin.ModelAdmin):
-    list_display = ('cost_item', 'quantity', 'total', 'date',)
+    list_display = ('cost_item', 'quantity', 'total_display', 'date',)
     search_fields = ('cost_item',)
     date_hierarchy = 'date'
     ordering = ('cost_item','-date',)

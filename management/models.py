@@ -412,6 +412,10 @@ class Cost(models.Model):
     def __str__(self):
         return smart_str(self.cost_item) + " - " + smart_str(self.total)
 
+    def total_display(self):
+        """ returns scores with dots as thousands separators in the admin display """
+        return '{:,}'.format(self.total).replace(',','.')
+
     class Meta:
         unique_together = (("cost_item", "date"),)
         app_label = 'management'
