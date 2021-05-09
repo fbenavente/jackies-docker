@@ -1,3 +1,4 @@
 local.py
 *.pyc
+docker-compose-deploy.yml
 collected_statics/
