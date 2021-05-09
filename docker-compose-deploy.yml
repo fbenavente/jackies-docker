@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  jackies:
+    build:
+      context: .
+    volumes:
+      - static_data:/vol/web
+    environment:
+      - SECRET_KEY=jasdfnasdioufb
+      - ALLOWED_HOSTS=127.0.0.1,localhost
+      - DATABASE_NAME=jackies
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=123456
+      - DATABASE_HOST=host.docker.internal
+
+  proxy:
+    build:
+      context: ./proxy
+    volumes:
+      - static_data:/vol/static
+    ports:
+      - "8080:8080"
+    depends_on:
+      - jackies
+
+volumes:
+  static_data:

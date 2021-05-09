@@ -12,21 +12,39 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 import raven
+import json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
 PROJECT_DIR = os.path.dirname(__file__)
-BASE_DIR = os.path.abspath(__file__ + "/../../../")
+BASE_DIR = os.path.abspath(__file__ + "/../../")
+
+SECRET_KEY = os.getenv('SECRET_KEY','changeme')
+DEBUG = bool(int(os.getenv('DEBUG', 0)))
+
+ALLOWED_HOSTS = []
+ALLOWED_HOSTS_ENV = os.getenv('ALLOWED_HOSTS')
+if ALLOWED_HOSTS_ENV:
+    ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DATABASES = {
+     'default': {
+         'ENGINE': 'django.db.backends.{}'.format(
+             os.getenv('DATABASE_ENGINE', 'postgresql_psycopg2')
+         ),
+         'NAME': os.getenv('DATABASE_NAME'),
+         'USER': os.getenv('DATABASE_USERNAME'),
+         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+         'HOST': os.getenv('DATABASE_HOST', '127.0.0.1'),
+         'PORT': os.getenv('DATABASE_PORT', 5432),
+         'OPTIONS': json.loads(
+             os.getenv('DATABASE_OPTIONS', '{}')
+         ),
+     }
+ }
 
 # Application definition
 
@@ -125,18 +143,22 @@ AUTH_USER_MODEL = 'management.CustomUser'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-STATIC_URL = '/static/'
+#STATIC_URL = '/static/'
+STATIC_URL = '/static/static/'
+MEDIA_URL = '/static/media/'
+#MEDIA_URL = '/static/media/'
 
-
-STATIC_ROOT = os.path.join(BASE_DIR, "collected_statics")
-
+#STATIC_ROOT = os.path.join(BASE_DIR, "collected_statics")
+#MEDIA_ROOT = os.path.join(BASE_DIR, "static/media")
+STATIC_ROOT = '/vol/web/static'
+MEDIA_ROOT = '/vol/web/media'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "static/media")
-MEDIA_URL = '/static/media/'
+
+
 FILE_UPLOAD_MAX_MEMORY_SIZE = 2.5
 
 # Additional jackies settings
@@ -146,18 +168,6 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 
 LOGIN_REDIRECT_URL = '/management/auth/login/'
-
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-AWS_ACCESS_KEY_ID = "AKIAJCREPO4TV5O43ZRA"
-AWS_SECRET_ACCESS_KEY = "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"
-
-AWS_STORAGE_BUCKET_NAME = "jackies-statics"
-
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-AWS_LOCATION = 'static'
-STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 REST_FRAMEWORK = {
  # Use Django's standard `django.contrib.auth` permissions,
