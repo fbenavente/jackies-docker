@@ -28,5 +28,6 @@ urlpatterns = [
     url(r'^jackies_store/', include('jackies_store.urls')),
     url(r'^dashboard/', include('dashboard.urls')),
     url('^.*$', IndexView.as_view(), name='index'),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
     #url('^.*$', IndexView.as_view(), name='index'),
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

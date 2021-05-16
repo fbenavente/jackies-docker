@@ -530,13 +530,14 @@ def web_checkout(request):
     data = {
         "id": 7,
         "to": order.user.email,
-        "bcc": "hermosillavenegas@gmail.com",
+        "bcc": "fbenavente@gmail.com",
         "replyto": "pedidos@jackies.cl",
         "attr": email_attrs,
         "headers": {"Content-Type": "text/html;charset=iso-8859-1"}
     }
 
     result = m.send_transactional_template(data)
+    print("AHAAAA")
     print(result)
     return redirect('post_checkout')
 

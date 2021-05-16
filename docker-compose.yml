@@ -11,3 +11,10 @@ services:
     command: sh -c "python manage.py runserver 0.0.0.0:8000"
     environment:
       - DEBUG=1
+# aqui poner para development
+      # - SECRET_KEY=
+      # - ALLOWED_HOSTS=127.0.0.1,localhost
+      # - DATABASE_NAME=
+      # - DATABASE_USERNAME=
+      # - DATABASE_PASSWORD=
+      # - DATABASE_HOST=host.docker.internal
