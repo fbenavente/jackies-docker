@@ -13,7 +13,7 @@ dj_database_url
 django-storages==1.6
 django-admin-rangefilter
 arrow
-sendinblue
 babel
 pillow==6.2.2
 boto3
+sib-api-v3-sdk

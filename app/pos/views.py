@@ -2,7 +2,9 @@ import json
 import arrow
 import random
 import string
-from mailin import Mailin
+#from mailin import Mailin
+import sib_api_v3_sdk
+from sib_api_v3_sdk.rest import ApiException
 from django.conf import settings
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.contrib.auth.decorators import login_required
@@ -19,10 +21,15 @@ from management.models import (
     CustomUser
 )
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
 
 
 INTEGER_PRODUCT_QTY = [1, 2, 3, 4]
 FLOAT_PRODUCT_QTY = [0.5, 1.0, 2.0, 3.0, 4.0]
+
+# Configure API key authorization: api-key
+configuration = sib_api_v3_sdk.Configuration()
+configuration.api_key['api-key'] = settings.SENDINBLUE_KEY
 
 
 class SugarFreeProductSerializer(object):
@@ -526,18 +533,25 @@ def web_checkout(request):
         'ORDER_RETIRE_TIME': arrow.get(order.retire_time).format('DD/MM/YYYY')
     }
 
-    m = Mailin("https://api.sendinblue.com/v2.0", '3T5swUHYFB7Lp8PM')
-    data = {
-        "id": 7,
-        "to": order.user.email,
-        "bcc": "fbenavente@gmail.com",
-        "replyto": "pedidos@jackies.cl",
-        "attr": email_attrs,
-        "headers": {"Content-Type": "text/html;charset=iso-8859-1"}
-    }
+    api_instance = sib_api_v3_sdk.TransactionalEmailsApi(sib_api_v3_sdk.ApiClient(configuration))
+    send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(to=[{"email":order.user.email, "name": order.user.full_name}], template_id=1, params=email_attrs, headers={"charset": "iso-8859-1", "Content-Type": "text/html;charset=iso-8859-1"}) # SendSmtpEmail | Values to send a transactional email
 
-    result = m.send_transactional_template(data)
-    print("AHAAAA")
+    #m = Mailin("https://api.sendinblue.com/v3", settings.SENDINBLUE_KEY)
+    # data = {
+    #     "id": 7,
+    #     "to": order.user.email,
+    #     "bcc": "fbenavente@gmail.com",
+    #     "replyto": "pedidos@jackies.cl",
+    #     "attr": email_attrs,
+    #     "headers": {"Content-Type": "text/html;charset=iso-8859-1"}
+    # }
+    #
+    # result = m.send_transactional_template(data)
+    try:
+        # Send a transactional email
+        result = api_instance.send_transac_email(send_smtp_email)
+    except ApiException as e:
+        print("Exception when calling SMTPApi->send_transac_email: %s\n" % e)
     print(result)
     return redirect('post_checkout')
 

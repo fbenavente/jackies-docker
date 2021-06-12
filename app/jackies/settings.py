@@ -22,6 +22,8 @@ BASE_DIR = os.path.abspath(__file__ + "/../../")
 SECRET_KEY = os.getenv('SECRET_KEY','changeme')
 DEBUG = bool(int(os.getenv('DEBUG', 0)))
 
+SENDINBLUE_KEY = os.getenv('SENDINBLUE_KEY','changeme')
+
 ALLOWED_HOSTS = []
 ALLOWED_HOSTS_ENV = os.getenv('ALLOWED_HOSTS')
 if ALLOWED_HOSTS_ENV:

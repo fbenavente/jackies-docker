@@ -11,8 +11,9 @@ services:
     command: sh -c "python manage.py runserver 0.0.0.0:8000"
     environment:
       - DEBUG=1
-# aqui poner para development
+# aqui poner para development (copiar los de deploy)
       # - SECRET_KEY=
+      # - SENDINBLUE_KEY=
       # - ALLOWED_HOSTS=127.0.0.1,localhost
       # - DATABASE_NAME=
       # - DATABASE_USERNAME=
