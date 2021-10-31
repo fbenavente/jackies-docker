@@ -100,7 +100,7 @@
         },
 
         // PRIVATE FUNCTIONS
-        /* 
+        /*
          * Set basic elements for the cart
          */
         _setElements: function () {
@@ -112,8 +112,8 @@
             this.cart_element.append('<div class="panel-heading sc-cart-heading"><strong>' + this.options.lang.cartTitle + '</strong></div>');
             this.cart_element.append('<div class="list-group sc-cart-item-list"></div>');
         },
-        /* 
-         * Set the toolbar for the cart 
+        /*
+         * Set the toolbar for the cart
          */
         _setToolbar: function () {
             if (this.options.toolbarSettings.showToolbar !== true) {
@@ -132,7 +132,8 @@
             toolbarButtonPanel.append('<textarea class="form-control" name="comments" id="comments" rows="2" placeholder="Comentarios (opcional)"></textarea>');
             toolbarButtonPanel.append('<br><h5 style="text-align:left;color:#c19c62;" class="">Seleccione día entrega:</h5>');
             toolbarButtonPanel.append('<small>(Retiro en tienda: Reusch 424, Temuco)</small>');
-            toolbarButtonPanel.append('<input class="form-control" required name="retire_time" id="datepicker">');
+            toolbarButtonPanel.append('<input class="form-control" style="float:left; width:120px" required name="retire_time" id="datepicker" readonly="true">');
+            toolbarButtonPanel.append('<select style="float:right; width:100px" class="form-control" id="hora" name="retire_hour"><option value="10" selected>10:00</option><option value="11">11:00</option><option value="12">12:00</option><option value="13">13:00</option><option value="14">14:00</option><option value="15">15:00</option><option value="16">16:00</option><option value="17">17:00</option><option value="18">18:00</option></select>');
             // Checkout Button
             if (this.options.toolbarSettings.showCheckoutButton) {
                 var btnCheckout = '';
@@ -172,7 +173,7 @@
             toolbar.append(toolbarButtonPanel);
             this.cart_element.append(toolbar);
         },
-        /* 
+        /*
          * Set events for the cart
          */
         _setEvents: function () {
@@ -223,7 +224,7 @@
                 });
             });
         },
-        /* 
+        /*
          * Get the parameters of a product by seaching elements with name attribute/data.
          * Product details will be return as an object
          */
@@ -241,7 +242,7 @@
             });
             return p;
         },
-        /* 
+        /*
          * Add the product object to the cart
          */
         _addToCart: function (p) {
@@ -285,7 +286,7 @@
             this._addUpdateCartItem(p);
             return p;
         },
-        /* 
+        /*
          * Remove the product object from the cart
          */
         _removeFromCart: function (unique_key) {
@@ -303,7 +304,7 @@
                 }
             });
         },
-        /* 
+        /*
          * Clear all products from the cart
          */
         _clearCart: function () {
@@ -312,7 +313,7 @@
             this._triggerEvent("cartCleared");
             this._hasCartChange();
         },
-        /* 
+        /*
          * Update the quantity of an item in the cart
          */
         _updateCartQuantity: function (unique_key, qty) {
@@ -330,7 +331,7 @@
                 }
             });
         },
-        /* 
+        /*
          * Update the UI of the cart list
          */
         _addUpdateCartItem: function (p) {
@@ -365,8 +366,8 @@
 
             this._hasCartChange();
         },
-        /* 
-         * Handles the changes in the cart 
+        /*
+         * Handles the changes in the cart
          */
         _hasCartChange: function () {
             $('.sc-cart-count', this.cart_element).text(this.cart.length);
@@ -384,10 +385,10 @@
                 $('.sc-cart-checkout, .sc-cart-clear').removeClass('disabled');
             }
 
-            // Update cart value to the  cart hidden element 
+            // Update cart value to the  cart hidden element
             $('#' + this.options.resultName, this.cart_element).val(JSON.stringify(this.cart));
         },
-        /* 
+        /*
          * Calculates the cart subtotal
          */
         _getCartSubtotal: function () {
@@ -400,7 +401,7 @@
             });
             return this._getMoneyFormatted(subtotal);
         },
-        /* 
+        /*
          * Cart submit functionalities
          */
         _submitCart: function () {
@@ -418,7 +419,7 @@
                 if (!fields[i].value && fields[i].name !== 'comments'){
                   alert("Completa tus datos y el día de retiro");
                   return false;
-                }            
+                }
               }
 
             switch (this.options.submitSettings.submitType) {
@@ -472,7 +473,7 @@
         },
 
         // HELPER FUNCTIONS
-        /* 
+        /*
          * Get the content of an HTML element irrespective of its type
          */
         _getContent: function (elm) {
@@ -487,7 +488,7 @@
             }
             return '';
         },
-        /* 
+        /*
          * Compare equality of two product objects
          */
         _isObjectsEqual: function (o1, o2) {
@@ -507,20 +508,20 @@
             }
             return true;
         },
-        /* 
+        /*
          * Format money
          */
         _getMoneyFormatted: function (n) {
             n = n - 0;
             return Number(n.toFixed(2)).toLocaleString(this.options.currencySettings.locales, this.options.currencySettings.currencyOptions);
         },
-        /* 
-         * Get the value of an element and empty value if the element not exists 
+        /*
+         * Get the value of an element and empty value if the element not exists
          */
         _getValueOrEmpty: function (v) {
             return v && typeof v !== typeof undefined ? v : '';
         },
-        /* 
+        /*
          * Validate Number
          */
         _getValidateNumber: function (n) {
@@ -530,7 +531,7 @@
             }
             return false;
         },
-        /* 
+        /*
          * Small templating function
          */
         _formatTemplate: function (t, o) {
@@ -546,7 +547,7 @@
             }
             return fs;
         },
-        /* 
+        /*
          * Event raiser
          */
         _triggerEvent: function (name, params) {
@@ -558,14 +559,14 @@
             }
             return e.result;
         },
-        /* 
+        /*
          * Get unique key
          */
         _getUniqueKey: function () {
             var d = new Date();
             return d.getTime();
         },
-        /* 
+        /*
          * Log message to console
          */
         _logMessage: function (msg) {
@@ -575,7 +576,7 @@
             // Log message
             console.log(msg);
         },
-        /* 
+        /*
          * Log error to console and terminate execution
          */
         _logError: function (msg) {
@@ -587,13 +588,13 @@
         },
 
         // PUBLIC FUNCTIONS
-        /* 
+        /*
          * Public function to sumbit the cart
          */
         submit: function () {
             this._submitCart();
         },
-        /* 
+        /*
          * Public function to clear the cart
          */
         clear: function () {

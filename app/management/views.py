@@ -71,6 +71,7 @@ class OrderList(APIView):
 
         order_data["user"] = request.user.id
         order_data["retire_time"] = datetime.strptime(order_data["retire_time"], '%d-%m-%Y:%H')
+
         if not request.user.is_admin:
             order_data["name"] = request.user.get_full_name()
             order_data["phone_number"] = request.user.phone_number
@@ -284,4 +285,3 @@ def getSizeName_v2(product):
         return product.size.normalized_name, product.size.get_image_url()
     else:
         return "", ""
-

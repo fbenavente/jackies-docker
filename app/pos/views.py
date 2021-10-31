@@ -463,7 +463,9 @@ def web_order(request):
     for flavor in Flavor.objects.filter(category_id=10).order_by('name'):
         if int(flavor.id) in BLACKLIST_FLAVORS:
             continue
-        flavors.append({'name': flavor.name, 'id': flavor.id})
+        hasActiveProducts = Product.objects.filter(category_id=10, flavor_id=flavor.id, is_sugar_free=False, status=1)
+        if len(hasActiveProducts) > 0 :
+            flavors.append({'name': flavor.name, 'id': flavor.id})
 
     default_flavor = request.GET.get('default_flavor', 43)
     default_size = request.GET.get('default_size', 8)
@@ -481,7 +483,7 @@ def web_order(request):
                 price_data[flavor['id']][size] = None
 
             try:
-                product = Product.objects.get(category_id=10, flavor_id=flavor['id'], size_id=size, is_sugar_free=False)
+                product = Product.objects.get(category_id=10, flavor_id=flavor['id'], size_id=size, is_sugar_free=False, status=1)
                 price_data[flavor['id']][size] = {
                     'price': product.price,
                     'id': product.id,
@@ -522,7 +524,8 @@ def web_checkout(request):
         )
     cart_list = json.loads(request.POST.get('cart_list'))
     retire_time = request.POST.get('retire_time')
-    retire_hour = DEFAULT_RETIRE_HOUR
+    #retire_hour = DEFAULT_RETIRE_HOUR
+    retire_hour = request.POST.get('retire_hour')
     order_comments = request.POST.get('comments') or ''
     order = create_order_for_user(cart_list, retire_time, retire_hour, order_comments, user, 1)
 

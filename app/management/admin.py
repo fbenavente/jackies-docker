@@ -5,9 +5,9 @@ from django.db.models import Q
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'category', 'flavor', 'size', 'price','thumbnail_html',)
+    list_display = ('pk', 'category', 'flavor', 'size', 'price','thumbnail_html','is_sugar_free',)
     search_fields = ('category__name', 'flavor__name', 'size__name', 'description',)
-    list_filter = (('category',admin.RelatedOnlyFieldListFilter),)
+    list_filter = (('category',admin.RelatedOnlyFieldListFilter),'is_sugar_free',)
 
     def thumbnail_html(self,obj):
         return u'<img height="100" src="%s/" />' % (obj.get_thumbnail_url())
