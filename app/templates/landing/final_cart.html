@@ -261,12 +261,25 @@ if(today.getDay() == 5){
                 maxDate: 30,
                 defaultDate: +2,
                 required: true,
-                beforeShowDay: $.datepicker.noWeekends
+                beforeShowDay: disableHoliday
+                //beforeShowDay: $.datepicker.noWeekends
         });
 
 
 
     });
+
+
+    function disableHoliday(date) {
+        var holiDays = ["2022-01-03", "2022-01-04", "2022-01-05", "2022-01-06", "2022-01-07", "2022-01-08", "2022-01-09", "2022-01-10", "2022-01-11", "2022-01-12", "2022-01-13", "2022-01-14"];
+        var string = $.datepicker.formatDate('yy-mm-dd', date);
+
+        var filterDate = new Date(string+" 12:00:00");
+        var day = filterDate.getDay();
+        var isHoliday = ($.inArray(string, holiDays) != -1);
+
+        return [day != 0 && day !=6 && !isHoliday]
+     }
   </script>
 </body>
 </html>
