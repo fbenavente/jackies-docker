@@ -31,9 +31,9 @@ def dashboard(request):
     last_year_ceil = today.shift(years=-1)
     last_year_floor = last_year_ceil.floor('month')
     # amount
-    amount_last_year = Order.objects.filter(retire_time__gte=last_year_floor.datetime, retire_time__lte=last_year_ceil.datetime, status=2).aggregate(Sum('total'))['total__sum']
+    amount_last_year = Order.objects.filter(retire_time__gte=last_year_floor.datetime, retire_time__lte=last_year_ceil.datetime, status=2).aggregate(Sum('total'))['total__sum'] or 0.0
     # count
-    count_last_year = int(ProductInOrder.objects.filter(order__retire_time__gte=last_year_floor.datetime, order__retire_time__lte=last_year_ceil.datetime, order__status=2).aggregate(Sum('quantity'))['quantity__sum'])
+    count_last_year = int(ProductInOrder.objects.filter(order__retire_time__gte=last_year_floor.datetime, order__retire_time__lte=last_year_ceil.datetime, order__status=2).aggregate(Sum('quantity'))['quantity__sum'] or 0)
 
     # percentage last year count
     if count_this_month > count_last_year:
@@ -41,7 +41,7 @@ def dashboard(request):
         count_compared_with_last_year_percentage = 100 - int((count_last_year * 100) / count_this_month)
     else:
         is_count_compared_with_last_year_greater = False
-        count_compared_with_last_year_percentage = 100 - int((count_this_month * 100) / count_last_year)
+        count_compared_with_last_year_percentage = (100 - int((count_this_month * 100) / count_last_year)) if count_last_year > 0 else 0
 
     # percentage last year amount
     if amount_this_month > amount_last_year:
@@ -49,7 +49,7 @@ def dashboard(request):
         amount_compared_with_last_year_percentage = 100 - int((amount_last_year * 100) / amount_this_month)
     else:
         is_amount_compared_with_last_year_greater = False
-        amount_compared_with_last_year_percentage = 100 - int((amount_this_month * 100) / amount_last_year)
+        amount_compared_with_last_year_percentage = (100 - int((amount_this_month * 100) / amount_last_year)) if amount_last_year > 0 else 0
 
     open_orders  = Order.objects.filter(status__in=[1, 4, 5]).order_by('retire_time')
 
