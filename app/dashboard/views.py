@@ -478,8 +478,8 @@ class YearSalesMoney(object):
                 ).aggregate(Sum('total'))
                 if total['total__sum']:
                     dataset['data'].append(total['total__sum'] or 0)
-			    else:
-				    dataset['data'].append(0)
+                else:
+                    dataset['data'].append(0)
             datasets.append(dataset)
         return datasets
 
